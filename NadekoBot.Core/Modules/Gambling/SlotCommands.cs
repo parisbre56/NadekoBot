@@ -167,12 +167,17 @@ namespace NadekoBot.Modules.Gambling
                         var result = SlotMachine.Pull();
                         int[] numbers = result.Numbers;
 
-                        for (int i = 0; i < 3; i++)
+                        using (var randomImage = Image.Load(_images.SlotEmojis[numbers[0]]))
                         {
-                            using (var randomImage = Image.Load(_images.SlotEmojis[numbers[i]]))
-                            {
-                                bgImage.Mutate(x => x.DrawImage(GraphicsOptions.Default, randomImage, new Point(95 + 142 * i, 330)));
-                            }
+                            bgImage.Mutate(x => x.DrawImage(GraphicsOptions.Default, randomImage, new Point(168, 443)));
+                        }
+                        using (var randomImage = Image.Load(_images.SlotEmojis[numbers[1]]))
+                        {
+                            bgImage.Mutate(x => x.DrawImage(GraphicsOptions.Default, randomImage, new Point(310, 443)));
+                        }
+                        using (var randomImage = Image.Load(_images.SlotEmojis[numbers[2]]))
+                        {
+                            bgImage.Mutate(x => x.DrawImage(GraphicsOptions.Default, randomImage, new Point(450, 443)));
                         }
 
                         var won = amount * result.Multiplier;
@@ -183,7 +188,7 @@ namespace NadekoBot.Modules.Gambling
                             var digit = (int)(printWon % 10);
                             using (var img = Image.Load(_images.SlotNumbers[digit]))
                             {
-                                bgImage.Mutate(x => x.DrawImage(GraphicsOptions.Default, img, new Point(230 - n * 16, 462)));
+                                bgImage.Mutate(x => x.DrawImage(GraphicsOptions.Default, img, new Point(313 - n * 16, 581)));
                             }
                             n++;
                         } while ((printWon /= 10) != 0);
@@ -195,7 +200,7 @@ namespace NadekoBot.Modules.Gambling
                             var digit = (int)(printAmount % 10);
                             using (var img = Image.Load(_images.SlotNumbers[digit]))
                             {
-                                bgImage.Mutate(x => x.DrawImage(GraphicsOptions.Default, img, new Point(395 - n * 16, 462)));
+                                bgImage.Mutate(x => x.DrawImage(GraphicsOptions.Default, img, new Point(479 - n * 16, 581)));
                             }
                             n++;
                         } while ((printAmount /= 10) != 0);
