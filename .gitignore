@@ -38,6 +38,10 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+#backup files
+*.old
+*.bup
+
 
 ### Linux ###
 *~
