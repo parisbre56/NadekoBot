@@ -81,18 +81,30 @@ namespace NadekoBot.Modules.Games
             var rng = new NadekoRandom();
 
             var roll = 0;
+            double hot = 0;
+            double crazy = 0;
+            string advice = GetText("rategirl_ghost");
+            
+            //Mrs.Bones
             if (uid == 498579037489332229) {
                 roll = 1000;
+                hot = 10;
+                crazy = 4;
+                advice = GetText("rategirl_mrs_bones");
+                return new GirlRating(_images, _httpFactory, crazy, hot, roll, advice);
             }
-            else if (uid == 274723067282980875)
+            
+            //Mr.Bones
+            if (uid == 274723067282980875) {
                 roll = 998;
-            else {
-                roll = rng.Next(1, 1001);
+                hot = 10;
+                crazy = 0;
+                advice = GetText("rategirl_mr_bones");
+                return new GirlRating(_images, _httpFactory, crazy, hot, roll, advice);
             }
+            
+            roll = rng.Next(1, 1001);
 
-            double hot;
-            double crazy;
-            string advice;
             if (roll < 100) {
                 hot = NextDouble(0, 5);
                 crazy = NextDouble(2, 3.99d);
