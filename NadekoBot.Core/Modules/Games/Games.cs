@@ -64,10 +64,10 @@ namespace NadekoBot.Modules.Games
                 return;
             }
             await Context.Channel.EmbedAsync(new EmbedBuilder().WithOkColor()
-                .WithTitle("Girl Rating For " + usr)
-                .AddField(efb => efb.WithName("Hot").WithValue(gr.Hot.ToString("F2")).WithIsInline(true))
-                .AddField(efb => efb.WithName("Crazy").WithValue(gr.Crazy.ToString("F2")).WithIsInline(true))
-                .AddField(efb => efb.WithName("Advice").WithValue(gr.Advice).WithIsInline(false))
+                .WithTitle(GetText("rategirl_title", usr))
+                .AddField(efb => efb.WithName(GetText("rategirl_bone_title")).WithValue(gr.Hot.ToString("F2")).WithIsInline(true))
+                .AddField(efb => efb.WithName(GetText("rategirl_flesh_title")).WithValue(gr.Crazy.ToString("F2")).WithIsInline(true))
+                .AddField(efb => efb.WithName(GetText("rategirl_advice_title")).WithValue(gr.Advice).WithIsInline(false))
                 .WithImageUrl(img)).ConfigureAwait(false);
         }
 
