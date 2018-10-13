@@ -98,7 +98,7 @@ namespace NadekoBot.Modules.Games
             if (uid == 274723067282980875) {
                 roll = 998;
                 hot = 10;
-                crazy = 0;
+                crazy = 1;
                 advice = GetText("rategirl_mr_bones");
                 return new GirlRating(_images, _httpFactory, crazy, hot, roll, advice);
             }
