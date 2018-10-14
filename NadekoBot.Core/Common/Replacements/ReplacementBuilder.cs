@@ -224,7 +224,7 @@ namespace NadekoBot.Common.Replacements
         public ReplacementBuilder WithRollRegex()
         {
             var rng = new NadekoRandom();
-            _regex.TryAdd(rngRegex, (match) =>
+            _regex.TryAdd(rollRegex, (match) =>
             {
                 if (!int.TryParse(match.Groups["num"].ToString(), out var num))
                     num = 1;
