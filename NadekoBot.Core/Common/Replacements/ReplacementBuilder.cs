@@ -14,12 +14,14 @@ namespace NadekoBot.Common.Replacements
     public class ReplacementBuilder
     {
         private static readonly Regex rngRegex = new Regex("%rng(?:(?<from>(?:-)?\\d+)-(?<to>(?:-)?\\d+))?%", RegexOptions.Compiled);
+        private static readonly Regex rollRegex = new Regex("%roll(?:(?<num>\\d+)d(?<dice>\\d+)(?<bonus>[-+]\\d+)?)?%", RegexOptions.Compiled);
         private ConcurrentDictionary<string, Func<string>> _reps = new ConcurrentDictionary<string, Func<string>>();
         private ConcurrentDictionary<Regex, Func<Match, string>> _regex = new ConcurrentDictionary<Regex, Func<Match, string>>();
 
         public ReplacementBuilder()
         {
             WithRngRegex();
+            WithRollRegex();
         }
 
         public ReplacementBuilder WithDefault(IUser usr, IMessageChannel ch, SocketGuild g, DiscordSocketClient client)
@@ -215,6 +217,37 @@ namespace NadekoBot.Common.Replacements
                     return string.Empty;
 
                 return rng.Next(from, to + 1).ToString();
+            });
+            return this;
+        }
+        
+        public ReplacementBuilder WithRollRegex()
+        {
+            var rng = new NadekoRandom();
+            _regex.TryAdd(rngRegex, (match) =>
+            {
+                if (!int.TryParse(match.Groups["num"].ToString(), out var num))
+                    num = 1;
+                if (!int.TryParse(match.Groups["dice"].ToString(), out var dice))
+                    dice = 6;
+                if (!int.TryParse(match.Groups["bonus"].ToString(), out var bonus))
+                    bonus = 0;
+
+                if(num == 0 || dice == 0)
+                    return "0";
+                
+                int sum = 0;
+                string output = "(";
+                for (int i = 0; i < num; ++i) {
+                    int value = rng.Next(0, dice)+1;
+                    if(i != 0)
+                        output = output + ", ";
+                    output = output + value;
+                    sum = sum + value;
+                }
+                if(bonus != 0)
+                    return (sum+bonus) + output + ", bonus: " + bonus + ")";
+                return sum + output + ")";
             });
             return this;
         }
