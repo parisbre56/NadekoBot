@@ -237,7 +237,7 @@ namespace NadekoBot.Common.Replacements
                     return "0";
                 
                 int sum = 0;
-                string output = "(";
+                string output = " (";
                 for (int i = 0; i < num; ++i) {
                     int value = rng.Next(0, dice)+1;
                     if(i != 0)
@@ -245,8 +245,11 @@ namespace NadekoBot.Common.Replacements
                     output = output + value;
                     sum = sum + value;
                 }
-                if(bonus != 0)
+                if(bonus > 0)
                     return (sum+bonus) + output + ", bonus: " + bonus + ")";
+                if(bonus < 0)
+                    return (sum+bonus) + output + ", penalty: " + -bonus + ")";
+                //Else, bonus is 0, do not show
                 return sum + output + ")";
             });
             return this;
