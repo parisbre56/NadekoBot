@@ -57,6 +57,8 @@ namespace NadekoBot.Core.Services.Impl
         {
             return _con.GetDatabase().StringGet(GetKey("card_" + key));
         }
+        
+        public byte[] Roulette => GetByteData(ImageKey.Roulette_Bg);
 
         public enum ImageKey
         {
@@ -72,6 +74,7 @@ namespace NadekoBot.Core.Services.Impl
             Rip_Bg,
             Rip_Overlay,
             Currency,
+            Roulette_Bg
         }
 
         public RedisImagesCache(ConnectionMultiplexer con, IBotCredentials creds)
