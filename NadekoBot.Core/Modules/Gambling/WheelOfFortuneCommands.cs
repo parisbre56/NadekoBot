@@ -8,6 +8,11 @@ using NadekoBot.Modules.Gambling.Services;
 using NadekoBot.Core.Modules.Gambling.Common;
 using NadekoBot.Core.Common;
 using System.Collections.Immutable;
+using Image = SixLabors.ImageSharp.Image;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing.Drawing;
+using SixLabors.Primitives;
 
 namespace NadekoBot.Modules.Gambling
 {
