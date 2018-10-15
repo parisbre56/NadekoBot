@@ -13,7 +13,6 @@ using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing.Drawing;
-using SixLabors.ImageSharp.Processing.RotateExtensions;
 using SixLabors.Primitives;
 
 namespace NadekoBot.Modules.Gambling
