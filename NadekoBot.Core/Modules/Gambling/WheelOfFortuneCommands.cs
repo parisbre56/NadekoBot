@@ -52,7 +52,7 @@ namespace NadekoBot.Modules.Gambling
 
                 using (var bgImage = Image.Load(_images.Roulette))
                 {
-                    bgImage.Mutate(x => x.RotateTransform(result.Index*45);
+                    bgImage.Mutate(x => x.RotateTransform(result.Index*45));
                     using (var imgStream = bgImage.ToStream())
                         {
                             await Context.Channel.SendFileAsync(imgStream, 
