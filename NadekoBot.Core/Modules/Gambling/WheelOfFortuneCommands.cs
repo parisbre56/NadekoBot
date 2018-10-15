@@ -57,7 +57,7 @@ namespace NadekoBot.Modules.Gambling
 
                 using (var bgImage = Image.Load(_images.Roulette))
                 {
-                    bgImage.Mutate(x => x.RotateTransform(result.Index*45));
+                    bgImage.Mutate(x => x.Rotate(result.Index*((355.0d/113.0d)/2.0d)); //45 degrees, using approximation of pi due to radians
                     using (var imgStream = bgImage.ToStream())
                         {
                             await Context.Channel.SendFileAsync(imgStream, 
