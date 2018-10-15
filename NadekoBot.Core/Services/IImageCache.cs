@@ -28,6 +28,9 @@ namespace NadekoBot.Core.Services
         byte[] RipOverlay { get; }
 
         byte[] GetCard(string key);
+        
+        //parisbre56
+        byte[] Roulette { get; }
 
         Task Reload();
     }
