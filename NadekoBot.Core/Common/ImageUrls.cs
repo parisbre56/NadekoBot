@@ -15,6 +15,9 @@ namespace NadekoBot.Core.Common
         //new
         public RipData Rip { get; set; }
         public SlotData Slots { get; set; }
+        
+        //parisbre56
+        public RouletteData Roulette { get; set; }
 
         public class RipData
         {
@@ -42,6 +45,12 @@ namespace NadekoBot.Core.Common
         }
 
         public class XpData
+        {
+            public Uri Bg { get; set; }
+        }
+        
+        //parisbre56
+        public class RouletteData
         {
             public Uri Bg { get; set; }
         }
