@@ -27,11 +27,13 @@ namespace NadekoBot.Modules.Gambling
 
             private readonly ICurrencyService _cs;
             private readonly DbService _db;
+            private readonly IImageCache _images;
 
-            public WheelOfFortuneCommands(ICurrencyService cs, DbService db)
+            public WheelOfFortuneCommands(ICurrencyService cs, DbService db, IDataCache data)
             {
                 _cs = cs;
                 _db = db;
+                _images = data.LocalImages;
             }
 
             [NadekoCommand, Usage, Description, Aliases]
@@ -48,6 +50,17 @@ namespace NadekoBot.Modules.Gambling
 
                 var result = await _service.WheelOfFortuneSpinAsync(Context.User.Id, amount).ConfigureAwait(false);
 
+                using (var bgImage = Image.Load(_images.Roulette))
+                {
+                    bgImage.Mutate(x => x.RotateTransform(result.Index*45);
+                    using (var imgStream = bgImage.ToStream())
+                        {
+                            await Context.Channel.SendFileAsync(imgStream, 
+                                                                "result.png", 
+                                                                $@"{Context.User.ToString()} won: {result.Amount + Bc.BotConfig.CurrencySign}").ConfigureAwait(false);
+                        }
+                }
+                
                 await Context.Channel.SendConfirmAsync(
 Format.Bold($@"{Context.User.ToString()} won: {result.Amount + Bc.BotConfig.CurrencySign}
 
