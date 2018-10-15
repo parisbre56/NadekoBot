@@ -9,6 +9,7 @@ using NadekoBot.Core.Modules.Gambling.Common;
 using NadekoBot.Core.Common;
 using System.Collections.Immutable;
 using Image = SixLabors.ImageSharp.Image;
+using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing.Drawing;
@@ -57,7 +58,7 @@ namespace NadekoBot.Modules.Gambling
 
                 using (var bgImage = Image.Load(_images.Roulette))
                 {
-                    bgImage.Mutate(x => x.Rotate(result.Index*((355.0d/113.0d)/2.0d))); //45 degrees, using approximation of pi due to radians
+                    bgImage.Mutate(x => x.Rotate(3*45));
                     using (var imgStream = bgImage.ToStream())
                         {
                             await Context.Channel.SendFileAsync(imgStream, 
