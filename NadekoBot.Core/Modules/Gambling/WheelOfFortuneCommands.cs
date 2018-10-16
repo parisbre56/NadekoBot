@@ -72,7 +72,12 @@ namespace NadekoBot.Modules.Gambling
                 var mayham = _rng.Next(0,100);
 
                 if(mayham == 0) {
-                    await Context.Channel.SendConfirmAsync(Format.Bold("Let's spin the Wheel of Mayham for x"+_mayhamMultiplier+" multiplier, "+context.User.Mention+"!")).ConfigureAwait(false);
+                    await Context.Channel.SendConfirmAsync(Format.Bold("Let's spin the Wheel of Mayham for x"
+                                                                       +_mayhamMultiplier
+                                                                       +" multiplier, "
+                                                                       +Context.User.Mention
+                                                                       +"!"))
+                                         .ConfigureAwait(false);
                     System.Threading.Thread.Sleep(500);
                     await Context.Channel.SendConfirmAsync(Format.Bold("Ratatata-ta-ta-ta ta ta...!")).ConfigureAwait(false);
                     System.Threading.Thread.Sleep(500);
@@ -86,11 +91,11 @@ namespace NadekoBot.Modules.Gambling
                 }
                 
                 if(wonAmount > 0) {
-                    await _cs.AddAsync(_userId, "Wheel Of Fortune - won", wonAmount, gamble: true)
+                    await _cs.AddAsync(Context.User.Id, "Wheel Of Fortune - won", wonAmount, gamble: true)
                              .ConfigureAwait(false);
                 } 
                 else if (wonAmount < 0) {
-                    await _cs.RemoveAsync(_userId, "Wheel Of Fortune - lost", -wonAmount, gamble: true)
+                    await _cs.RemoveAsync(Context.User.Id, "Wheel Of Fortune - lost", -wonAmount, gamble: true)
                              .ConfigureAwait(false);
                 }
                 
