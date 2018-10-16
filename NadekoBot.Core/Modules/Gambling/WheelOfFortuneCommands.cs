@@ -116,13 +116,14 @@ namespace NadekoBot.Modules.Gambling
                                                              heightCrop, 
                                                              originalWidth, 
                                                              originalHeight)));
-                    var resizeOptions = new ResizeOptions();
-                    resizeOptions.Mode = ResizeMode.Pad;
-                    resizeOptions.Position = AnchorPositionMode.TopLeft;
-                    resizeOptions.Size = new Size(originalWidth + (ptImage.Width / 2), originalHeight);
-                    bgImage.Mutate(x => x.Resize(resizeOptions));
                     
                     using (var ptImage = Image.Load(_images.RoulettePointer)) {
+                        var resizeOptions = new ResizeOptions();
+                        resizeOptions.Mode = ResizeMode.Pad;
+                        resizeOptions.Position = AnchorPositionMode.TopLeft;
+                        resizeOptions.Size = new Size(originalWidth + (ptImage.Width / 2), originalHeight);
+                        bgImage.Mutate(x => x.Resize(resizeOptions));
+                        
                         var pointerPosX = bgImage.Width - ptImage.Width;
                         var pointerPosY = (bgImage.Height / 2) - (ptImage.Height / 2);
                         bgImage.Mutate(x => x.DrawImage(GraphicsOptions.Default, ptImage, new Point(pointerPosX, pointerPosY)));
