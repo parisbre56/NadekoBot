@@ -80,7 +80,7 @@ namespace NadekoBot.Modules.Gambling
                                                                        +_mayhamMultiplier
                                                                        +" multiplier, "
                                                                        +Context.User.Mention
-                                                                       +"!"))
+                                                                       +"!")
                                          .ConfigureAwait(false);
                     System.Threading.Thread.Sleep(2000);
                     await Context.Channel.SendConfirmAsync("Ratatata-ta-ta-ta ta ta...!").ConfigureAwait(false);
