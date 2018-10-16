@@ -112,7 +112,10 @@ namespace NadekoBot.Modules.Gambling
                     var widthCrop = (bgImage.Width - originalWidth)/2;
                     var heightCrop = (bgImage.Height - originalHeight)/2;
                         
-                    bgImage.Mutate(x => x.Crop(new Rectangle(widthCrop, heightCrop, bgImage.Width - widthCrop, bgImage.Height - heightCrop)));
+                    bgImage.Mutate(x => x.Crop(new Rectangle(widthCrop, 
+                                                             heightCrop, 
+                                                             originalWidth + widthCrop, 
+                                                             originalHeight + heightCrop)));
                     
                     using (var ptImage = Image.Load(_images.RoulettePointer)) {
                         var pointerPosX = bgImage.Width - ptImage.Width;
