@@ -16,7 +16,7 @@
   "permissions_fw_cleared": "Removed all filtered words and filtered words channel settings.",
   "utility_aliases_cleared": "All {0} aliases on this server have been removed.",
   "searches_streams_cleared": "All {0} followed streams on this server have been removed.",
-  "nsfw_autohentai_stopped": "Autohentai stopped."
+  "nsfw_autohentai_stopped": "Autohentai stopped.",
   "nsfw_not_found": "No results found.",
   "administration_aar_disabled": "**Auto assign role** on user join is now **disabled**.",
   "administration_aar_enabled": "**Auto assign role** on user join is now **enabled**.",
