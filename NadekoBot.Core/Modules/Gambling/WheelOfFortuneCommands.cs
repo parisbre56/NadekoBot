@@ -112,17 +112,19 @@ namespace NadekoBot.Modules.Gambling
                                                
                     using (var imgStream = bgImage.ToStream())
                     {
+                        string wonText;
+                        var wonAmount;
                         if(amount >= 0) {
-                            await Context.Channel.SendFileAsync(imgStream, 
-                                                                "result.png", 
-                                                                $@"{Context.User.ToString()} won: {amount + Bc.BotConfig.CurrencySign}\n{commentary}")
-                                                 .ConfigureAwait(false);
+                            wonText = GetText("won");
+                            wonAmount = amount;
                         } else {
-                            await Context.Channel.SendFileAsync(imgStream, 
-                                                                "result.png", 
-                                                                $@"{Context.User.ToString()} lost: {-amount + Bc.BotConfig.CurrencySign}\n{commentary}")
-                                                 .ConfigureAwait(false);
+                            wonText = GetText("lost");
+                            wonAmount = -amount;
                         }
+                        await Context.Channel.SendFileAsync(imgStream, 
+                                                            "result.png", 
+                                                            $@"{Context.User.ToString()} {wonText}: {wonAmount + Bc.BotConfig.CurrencySign}\n{commentary}")
+                                             .ConfigureAwait(false);
                     }
                 }
             }
