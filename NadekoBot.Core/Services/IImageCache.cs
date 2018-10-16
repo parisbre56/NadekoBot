@@ -31,6 +31,7 @@ namespace NadekoBot.Core.Services
         
         //parisbre56
         byte[] Roulette { get; }
+        byte[] RoulettePointer { get; }
 
         Task Reload();
     }
