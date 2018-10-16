@@ -142,7 +142,7 @@ namespace NadekoBot.Modules.Gambling
                         }
                         await Context.Channel.SendFileAsync(imgStream, 
                                                             "result.png", 
-                                                            $@"{Context.User.ToString()} {outText}: {outAmount + Bc.BotConfig.CurrencySign}{System.Environment.NewLine}{commentary}")
+                                                            $@"{Context.User.ToString()} {outText}: `{outAmount}`{Bc.BotConfig.CurrencySign}{System.Environment.NewLine}{commentary}")
                                              .ConfigureAwait(false);
                     }
                 }
