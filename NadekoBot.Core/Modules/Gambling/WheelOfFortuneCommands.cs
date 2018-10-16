@@ -65,7 +65,7 @@ namespace NadekoBot.Modules.Gambling
 
                 var _rng = new NadekoRandom();
                 var result = _rng.Next(0, _results.Length);
-                var amount = _results[result].Item1 * amount;
+                var wonAmount = _results[result].Item1 * amount;
                 string commentary = GetText(_results[result].Item2);
                 var rotation = (result * 360)/_results.Length;
                 var mayham = _rng.Next(0,100);
@@ -81,15 +81,15 @@ namespace NadekoBot.Modules.Gambling
                     System.Threading.Thread.Sleep(2000);
                     await Context.Channel.SendConfirmAsync(Format.Bold("Ta!")).ConfigureAwait(false);
                     System.Threading.Thread.Sleep(200);
-                    amount = amount * _mayhamMultiplier;
+                    wonAmount = wonAmount * _mayhamMultiplier;
                 }
                 
-                if(amount > 0) {
-                    await _cs.AddAsync(_userId, "Wheel Of Fortune - won", amount, gamble: true)
+                if(wonAmount > 0) {
+                    await _cs.AddAsync(_userId, "Wheel Of Fortune - won", wonAmount, gamble: true)
                              .ConfigureAwait(false);
                 } 
-                else if (amount < 0) {
-                    await _cs.RemoveAsync(_userId, "Wheel Of Fortune - lost", -amount, gamble: true)
+                else if (wonAmount < 0) {
+                    await _cs.RemoveAsync(_userId, "Wheel Of Fortune - lost", -wonAmount, gamble: true)
                              .ConfigureAwait(false);
                 }
                 
@@ -113,18 +113,18 @@ namespace NadekoBot.Modules.Gambling
                                                
                     using (var imgStream = bgImage.ToStream())
                     {
-                        string wonText;
-                        var wonAmount;
-                        if(amount >= 0) {
-                            wonText = GetText("won");
-                            wonAmount = amount;
+                        string outText;
+                        var outAmount;
+                        if(wonAmount >= 0) {
+                            outText = GetText("won");
+                            outAmount = wonAmount;
                         } else {
-                            wonText = GetText("lost");
-                            wonAmount = -amount;
+                            outText = GetText("lost");
+                            outAmount = -wonAmount;
                         }
                         await Context.Channel.SendFileAsync(imgStream, 
                                                             "result.png", 
-                                                            $@"{Context.User.ToString()} {wonText}: {wonAmount + Bc.BotConfig.CurrencySign}\n{commentary}")
+                                                            $@"{Context.User.ToString()} {outText}: {outAmount + Bc.BotConfig.CurrencySign}\n{commentary}")
                                              .ConfigureAwait(false);
                     }
                 }
