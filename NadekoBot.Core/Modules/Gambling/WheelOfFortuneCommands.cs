@@ -71,7 +71,7 @@ namespace NadekoBot.Modules.Gambling
                 var rotation = (result * 360)/_results.Length;
                 var mayham = _rng.Next(0,100);
 
-                if(mayham == 0) {
+                if(mayham != 0) {
                     wonAmountTemp = wonAmountTemp * _mayhamMultiplier;
                     
                     await Context.Channel.SendConfirmAsync(Format.Bold("Let's spin the Wheel of Mayham for x"
@@ -142,7 +142,7 @@ namespace NadekoBot.Modules.Gambling
                         }
                         await Context.Channel.SendFileAsync(imgStream, 
                                                             "result.png", 
-                                                            $@"{Context.User.ToString()} {outText}: `{outAmount}`{Bc.BotConfig.CurrencySign}{System.Environment.NewLine}{commentary}")
+                                                            $@"**{Context.User.ToString()}** {outText}: `{outAmount}`{Bc.BotConfig.CurrencySign}{System.Environment.NewLine}{commentary}")
                                              .ConfigureAwait(false);
                     }
                 }
