@@ -59,6 +59,8 @@ namespace NadekoBot.Core.Services.Impl
         }
         
         public byte[] Roulette => GetByteData(ImageKey.Roulette_Bg);
+        
+        public byte[] RoulettePointer => GetByteData(ImageKey.Roulette_Pointer);
 
         public enum ImageKey
         {
