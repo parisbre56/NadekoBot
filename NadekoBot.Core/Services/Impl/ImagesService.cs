@@ -76,7 +76,8 @@ namespace NadekoBot.Core.Services.Impl
             Rip_Bg,
             Rip_Overlay,
             Currency,
-            Roulette_Bg
+            Roulette_Bg,
+            Roulette_Pointer
         }
 
         public RedisImagesCache(ConnectionMultiplexer con, IBotCredentials creds)
