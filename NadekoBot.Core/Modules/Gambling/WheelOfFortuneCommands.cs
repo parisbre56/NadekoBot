@@ -66,12 +66,14 @@ namespace NadekoBot.Modules.Gambling
 
                 var _rng = new NadekoRandom();
                 var result = _rng.Next(0, _results.Length);
-                long wonAmount = (long)(_results[result].Item1 * amount);
+                var wonAmountTemp = _results[result].Item1 * amount;
                 string commentary = GetText(_results[result].Item2);
                 var rotation = (result * 360)/_results.Length;
                 var mayham = _rng.Next(0,100);
 
                 if(mayham == 0) {
+                    wonAmountTemp = wonAmountTemp * _mayhamMultiplier;
+                    
                     await Context.Channel.SendConfirmAsync(Format.Bold("Let's spin the Wheel of Mayham for x"
                                                                        +_mayhamMultiplier
                                                                        +" multiplier, "
@@ -87,8 +89,9 @@ namespace NadekoBot.Modules.Gambling
                     System.Threading.Thread.Sleep(2000);
                     await Context.Channel.SendConfirmAsync(Format.Bold("Ta!")).ConfigureAwait(false);
                     System.Threading.Thread.Sleep(200);
-                    wonAmount = wonAmount * _mayhamMultiplier;
                 }
+                
+                long wonAmount = (long) wonAmountTemp; //remove the decimal part
                 
                 if(wonAmount > 0) {
                     await _cs.AddAsync(Context.User.Id, "Wheel Of Fortune - won", wonAmount, gamble: true)
