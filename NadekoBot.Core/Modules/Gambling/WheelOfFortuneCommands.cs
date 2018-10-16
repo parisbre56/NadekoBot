@@ -2,6 +2,7 @@
 using NadekoBot.Common.Attributes;
 using NadekoBot.Extensions;
 using NadekoBot.Core.Services;
+using System.Tuple;
 using System.Threading.Tasks;
 using Wof = NadekoBot.Modules.Gambling.Common.WheelOfFortune.WheelOfFortuneGame;
 using NadekoBot.Modules.Gambling.Services;
