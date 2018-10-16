@@ -66,7 +66,7 @@ namespace NadekoBot.Modules.Gambling
 
                 var _rng = new NadekoRandom();
                 var result = _rng.Next(0, _results.Length);
-                var wonAmount = _results[result].Item1 * amount;
+                long wonAmount = (long)(_results[result].Item1 * amount);
                 string commentary = GetText(_results[result].Item2);
                 var rotation = (result * 360)/_results.Length;
                 var mayham = _rng.Next(0,100);
