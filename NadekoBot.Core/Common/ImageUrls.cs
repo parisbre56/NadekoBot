@@ -53,6 +53,7 @@ namespace NadekoBot.Core.Common
         public class RouletteData
         {
             public Uri Bg { get; set; }
+            public Uri Pointer { get; set; }
         }
     }
 }
