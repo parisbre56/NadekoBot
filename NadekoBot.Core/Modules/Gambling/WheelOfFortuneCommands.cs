@@ -74,20 +74,22 @@ namespace NadekoBot.Modules.Gambling
                 if(mayham != 0) {
                     wonAmountTemp = wonAmountTemp * _mayhamMultiplier;
                     
-                    await Context.Channel.SendConfirmAsync(Format.Bold("Let's spin the **Wheel of Mayham** for x"
+                    await Context.Channel.SendConfirmAsync("Let's spin the "
+                                                           +Format.Bold("Wheel of Mayham")
+                                                           +" for x"
                                                                        +_mayhamMultiplier
                                                                        +" multiplier, "
                                                                        +Context.User.Mention
                                                                        +"!"))
                                          .ConfigureAwait(false);
-                    System.Threading.Thread.Sleep(500);
-                    await Context.Channel.SendConfirmAsync(Format.Bold("Ratatata-ta-ta-ta ta ta...!")).ConfigureAwait(false);
-                    System.Threading.Thread.Sleep(500);
-                    await Context.Channel.SendConfirmAsync(Format.Bold("Ta...!")).ConfigureAwait(false);
-                    System.Threading.Thread.Sleep(1000);
-                    await Context.Channel.SendConfirmAsync(Format.Bold("...")).ConfigureAwait(false);
                     System.Threading.Thread.Sleep(2000);
-                    await Context.Channel.SendConfirmAsync(Format.Bold("Ta!")).ConfigureAwait(false);
+                    await Context.Channel.SendConfirmAsync("Ratatata-ta-ta-ta ta ta...!").ConfigureAwait(false);
+                    System.Threading.Thread.Sleep(2000);
+                    await Context.Channel.SendConfirmAsync("Ta...!").ConfigureAwait(false);
+                    System.Threading.Thread.Sleep(2000);
+                    await Context.Channel.SendConfirmAsync("...").ConfigureAwait(false);
+                    System.Threading.Thread.Sleep(2000);
+                    await Context.Channel.SendConfirmAsync("Ta!").ConfigureAwait(false);
                     System.Threading.Thread.Sleep(200);
                 }
                 
@@ -142,7 +144,7 @@ namespace NadekoBot.Modules.Gambling
                         }
                         await Context.Channel.SendFileAsync(imgStream, 
                                                             "result.png", 
-                                                            $@"**{Context.User.ToString()}** {outText}: `{outAmount}`{Bc.BotConfig.CurrencySign}{System.Environment.NewLine}{commentary}")
+                                                            $@"{Format.Bold(Context.User.ToString())} {outText}: `{outAmount}`{Bc.BotConfig.CurrencySign}{System.Environment.NewLine}{commentary}")
                                              .ConfigureAwait(false);
                     }
                 }
