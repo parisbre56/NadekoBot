@@ -123,7 +123,7 @@ namespace NadekoBot.Modules.Gambling
                     using (var imgStream = bgImage.ToStream())
                     {
                         string outText;
-                        var outAmount;
+                        long outAmount;
                         if(wonAmount >= 0) {
                             outText = GetText("won");
                             outAmount = wonAmount;
