@@ -107,7 +107,7 @@ namespace NadekoBot.Modules.Gambling
                     var originalWidth = bgImage.Width;
                     var originalHeight = bgImage.Height;
                     
-                    bgImage.Mutate(x => x.Rotate(rotation));
+                    bgImage.Mutate(x => x.Rotate(-rotation));
                     
                     var widthCrop = (bgImage.Width - originalWidth)/2;
                     var heightCrop = (bgImage.Height - originalHeight)/2;
