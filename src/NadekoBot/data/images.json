@@ -66,6 +66,7 @@
     "Bg": "https://i.imgur.com/bQJqlQ2.png"
   },
   "Roulette": {
-    "Bg": "http://www.murderousmaths.co.uk/books/roulette/wheel%200.jpg"
+    "Bg": "https://cdn.discordapp.com/attachments/498903212384976897/501521569047379989/wheel.png",
+    "Pointer": "https://cdn.discordapp.com/attachments/498903212384976897/501521462104948737/Pointer.png"
   }
 }
