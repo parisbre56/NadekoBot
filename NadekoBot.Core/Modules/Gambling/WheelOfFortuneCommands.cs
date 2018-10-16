@@ -74,7 +74,7 @@ namespace NadekoBot.Modules.Gambling
                 if(mayham != 0) {
                     wonAmountTemp = wonAmountTemp * _mayhamMultiplier;
                     
-                    await Context.Channel.SendConfirmAsync(Format.Bold("Let's spin the Wheel of Mayham for x"
+                    await Context.Channel.SendConfirmAsync(Format.Bold("Let's spin the **Wheel of Mayham** for x"
                                                                        +_mayhamMultiplier
                                                                        +" multiplier, "
                                                                        +Context.User.Mention
