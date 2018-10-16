@@ -118,7 +118,7 @@ namespace NadekoBot.Modules.Gambling
                                                              originalHeight + heightCrop)));
                     
                     using (var ptImage = Image.Load(_images.RoulettePointer)) {
-                        var pointerPosX = bgImage.Width - ptImage.Width;
+                        var pointerPosX = bgImage.Width - (ptImage.Width/2);
                         var pointerPosY = (bgImage.Height / 2) - (ptImage.Height / 2);
                         bgImage.Mutate(x => x.DrawImage(GraphicsOptions.Default, ptImage, new Point(pointerPosX, pointerPosY)));
                     }
