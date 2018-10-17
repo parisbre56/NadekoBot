@@ -40,7 +40,7 @@ namespace NadekoBot.Modules.Gambling
             Tuple.Create(1.1m, "wheel_break_even"),
             Tuple.Create(1.2m, "wheel_break_even")}.ToImmutableArray();
 
-            private readonly decimal _mayhamMultiplier = 10m;
+            private readonly decimal _mayhemMultiplier = 10m;
             private readonly ICurrencyService _cs;
             private readonly DbService _db;
             private readonly IImageCache _images;
@@ -69,15 +69,15 @@ namespace NadekoBot.Modules.Gambling
                 var wonAmountTemp = _results[result].Item1 * amount;
                 string commentary = GetText(_results[result].Item2);
                 var rotation = (result * 360)/_results.Length;
-                var mayham = _rng.Next(0,100);
+                var mayhem = _rng.Next(0,100);
 
-                if(mayham == 0) {
-                    wonAmountTemp = wonAmountTemp * _mayhamMultiplier;
+                if(mayhem == 0) {
+                    wonAmountTemp = wonAmountTemp * _mayhemMultiplier;
                     
                     await Context.Channel.SendConfirmAsync("Let's spin the "
-                                                           +Format.Bold("Wheel of Mayham")
+                                                           +Format.Bold("Wheel of Mayhem")
                                                            +" for x"
-                                                                       +_mayhamMultiplier
+                                                                       +_mayhemMultiplier
                                                                        +" multiplier, "
                                                                        +Context.User.Mention
                                                                        +"!")
