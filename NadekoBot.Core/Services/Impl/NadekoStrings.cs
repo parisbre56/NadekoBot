@@ -116,7 +116,7 @@ namespace NadekoBot.Core.Services.Impl
                                                         + " key from " 
                                                         + cultureInfo 
                                                         + " response strings has incorrect type " 
-                                                        + val.GetType() 
+                                                        + newVal.GetType() 
                                                         + ". PLEASE REPORT THIS.");
                 return null;
             }
