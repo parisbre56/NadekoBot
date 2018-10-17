@@ -87,7 +87,7 @@ namespace NadekoBot.Core.Services.Impl
             if(val == null)
                 return null;
             if(val is string)
-                return val;
+                return (string)val;
             if(!(val is string[])) {
                 LogManager.GetCurrentClassLogger().Warn(text 
                                                         + " key from " 
