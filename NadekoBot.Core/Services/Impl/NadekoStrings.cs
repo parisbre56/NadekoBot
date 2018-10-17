@@ -107,7 +107,7 @@ namespace NadekoBot.Core.Services.Impl
             object newVal = arr[arrKey];
             if(newVal == null)
                 return null;
-            if(!(newVal is string)) {
+            if(!(newVal is JValue)) {
                 LogManager.GetCurrentClassLogger().Warn(text 
                                                         + "["
                                                         + arrKey
@@ -120,7 +120,7 @@ namespace NadekoBot.Core.Services.Impl
                                                         + ". PLEASE REPORT THIS.");
                 return null;
             }
-            return (string)newVal;
+            return ((JValue)newVal).ToString();
         }
 
         public string GetText(string key, ulong? guildId, string lowerModuleTypeName, params object[] replacements) =>
