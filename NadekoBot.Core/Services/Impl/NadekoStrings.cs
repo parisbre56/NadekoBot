@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NLog;
 
 namespace NadekoBot.Core.Services.Impl
@@ -88,8 +89,30 @@ namespace NadekoBot.Core.Services.Impl
                 return null;
             if(val is string)
                 return (string)val;
-            if(!(val is string[])) {
+            if(!(val is JArray)) {
                 LogManager.GetCurrentClassLogger().Warn(text 
+                                                        + " = "
+                                                        + val
+                                                        +" key from " 
+                                                        + cultureInfo 
+                                                        + " response strings has incorrect type " 
+                                                        + val.GetType() 
+                                                        + ". PLEASE REPORT THIS.");
+                return null;
+            }
+            JArray arr = (JArray)val;
+            if(arr.Length == 0)
+                return null;
+            var arrKey = _random.Next(0, arr.Length);
+            object newVal = arr[arrKey];
+            if(newVal == null)
+                return null;
+            if(!(newVal is string)) {
+                LogManager.GetCurrentClassLogger().Warn(text 
+                                                        + "["
+                                                        + arrKey
+                                                        + "] = "
+                                                        + newVal
                                                         + " key from " 
                                                         + cultureInfo 
                                                         + " response strings has incorrect type " 
@@ -97,10 +120,7 @@ namespace NadekoBot.Core.Services.Impl
                                                         + ". PLEASE REPORT THIS.");
                 return null;
             }
-            string[] arr = (string[])val;
-            if(arr.Length == 0)
-                return null;
-            return arr[_random.Next(0, arr.Length)];
+            return (string)newVal;
         }
 
         public string GetText(string key, ulong? guildId, string lowerModuleTypeName, params object[] replacements) =>
