@@ -101,9 +101,9 @@ namespace NadekoBot.Core.Services.Impl
                 return null;
             }
             JArray arr = (JArray)val;
-            if(arr.Length == 0)
+            if(arr.Count == 0)
                 return null;
-            var arrKey = _random.Next(0, arr.Length);
+            var arrKey = _random.Next(0, arr.Count);
             object newVal = arr[arrKey];
             if(newVal == null)
                 return null;
