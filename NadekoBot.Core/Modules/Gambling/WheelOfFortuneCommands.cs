@@ -23,22 +23,22 @@ namespace NadekoBot.Modules.Gambling
         public class WheelOfFortuneCommands : GamblingSubmodule<GamblingService>
         {
             private static readonly ImmutableArray<Tuple<decimal, string>> _results = new Tuple<decimal, string>[] {
-            Tuple.Create(0.1m, "wheel_total_loss"),
-            Tuple.Create(0.5m, "wheel_mild_loss"),
             Tuple.Create(0.2m, "wheel_total_loss"),
-            Tuple.Create(10m, "wheel_great_win"),
+            Tuple.Create(1.1m, "wheel_mild_loss"),
+            Tuple.Create(2m, "wheel_total_loss"),
+            Tuple.Create(0.01m, "wheel_great_win"),
             Tuple.Create(-1m, "wheel_critfail"),
             Tuple.Create(0.01m, "wheel_total_loss"),
-            Tuple.Create(0.9m, "wheel_break_even"),
-            Tuple.Create(0.3m, "wheel_total_loss"),
-            Tuple.Create(0.7m, "wheel_mild_loss"),
-            Tuple.Create(1.5m, "wheel_mild_win"),
-            Tuple.Create(1.8m, "wheel_mild_win"),
             Tuple.Create(1m, "wheel_break_even"),
-            Tuple.Create(1.8m, "wheel_mild_win"),
-            Tuple.Create(2m, "wheel_mild_win"),
-            Tuple.Create(1.1m, "wheel_break_even"),
-            Tuple.Create(1.2m, "wheel_break_even")}.ToImmutableArray();
+            Tuple.Create(0.05m, "wheel_total_loss"),
+            Tuple.Create(0.5m, "wheel_mild_loss"),
+            Tuple.Create(0.6m, "wheel_mild_win"),
+            Tuple.Create(0.1m, "wheel_mild_win"),
+            Tuple.Create(0.3m, "wheel_break_even"),
+            Tuple.Create(10m, "wheel_mild_win"),
+            Tuple.Create(0.4m, "wheel_mild_win"),
+            Tuple.Create(0.01m, "wheel_break_even"),
+            Tuple.Create(0.7m, "wheel_break_even")}.ToImmutableArray();
 
             private readonly decimal _mayhemMultiplier = 10m;
             private readonly ICurrencyService _cs;
