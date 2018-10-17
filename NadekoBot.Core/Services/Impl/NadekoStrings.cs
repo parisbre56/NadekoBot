@@ -13,24 +13,26 @@ namespace NadekoBot.Core.Services.Impl
     {
         public const string stringsPath = @"_strings/";
 
-        private readonly ImmutableDictionary<string, ImmutableDictionary<string, string>> responseStrings;
+        private readonly ImmutableDictionary<string, ImmutableDictionary<string, object>> responseStrings;
         private readonly Logger _log;
         /// <summary>
         /// Used as failsafe in case response key doesn't exist in the selected or default language.
         /// </summary>
         private readonly CultureInfo _usCultureInfo = new CultureInfo("en-US");
         private readonly ILocalization _localization;
+        private readonly Random _random;
 
         public NadekoStrings(ILocalization loc)
         {
+            _random = new Random();
             _log = LogManager.GetCurrentClassLogger();
             _localization = loc;
 
             var sw = Stopwatch.StartNew();
-            var allLangsDict = new Dictionary<string, ImmutableDictionary<string, string>>(); // lang:(name:value)
+            var allLangsDict = new Dictionary<string, ImmutableDictionary<string, object>>(); // lang:(name:value)
             foreach (var file in Directory.GetFiles(stringsPath))
             {
-                var langDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(file));
+                var langDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(file));
 
                 allLangsDict.Add(GetLocaleName(file).ToUpperInvariant(), langDict.ToImmutableDictionary());
             }
@@ -78,11 +80,27 @@ namespace NadekoBot.Core.Services.Impl
 
         private string GetString(string text, CultureInfo cultureInfo)
         {
-            if (!responseStrings.TryGetValue(cultureInfo.Name.ToUpperInvariant(), out ImmutableDictionary<string, string> strings))
+            if (!responseStrings.TryGetValue(cultureInfo.Name.ToUpperInvariant(), out ImmutableDictionary<string, object> strings))
                 return null;
 
-            strings.TryGetValue(text, out string val);
-            return val;
+            strings.TryGetValue(text, out object val);
+            if(val == null)
+                return null;
+            if(val is string)
+                return val;
+            if(!(val is string[])) {
+                LogManager.GetCurrentClassLogger().Warn(text 
+                                                        + " key from " 
+                                                        + cultureInfo 
+                                                        + " response strings has incorrect type " 
+                                                        + val.GetType() 
+                                                        + ". PLEASE REPORT THIS.");
+                return null;
+            }
+            string[] arr = (string[])val;
+            if(arr.Length == 0)
+                return null;
+            return arr[_random.Next(0, arr.Length)];
         }
 
         public string GetText(string key, ulong? guildId, string lowerModuleTypeName, params object[] replacements) =>
