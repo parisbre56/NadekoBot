@@ -66,7 +66,7 @@ namespace NadekoBot.Core.Modules.Gambling.Common
                 {
                     _locker.Release();
                 }
-            }, null, TimeSpan.FromSeconds(15), TimeSpan.FromMilliseconds(-1));
+            }, null, TimeSpan.FromSeconds(5*60), TimeSpan.FromMilliseconds(-1));
         }
 
         public async Task StartGame()
