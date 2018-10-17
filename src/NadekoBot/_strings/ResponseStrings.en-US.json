@@ -221,7 +221,7 @@
   "gambling_gifted": "has gifted {0} to {1}",
   "gambling_has": "{0} has {1}",
   "gambling_heads": "Head",
-  "gambling_leaderboard": "Leaderboard",
+  "gambling_leaderboard": ["Leaderboard", "Skullmasters", "Bonerlords", "Headhunters", "Cranium Primarchs"],
   "gambling_mass_award": "Awarded {0} to {1} users from {2} role.",
   "gambling_max_bet_limit": "You can't bet more than {0}",
   "gambling_min_bet_limit": "You can't bet less than {0}",
