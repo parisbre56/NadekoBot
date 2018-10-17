@@ -105,7 +105,8 @@ namespace NadekoBot.Modules.Gambling
 
                     if (bj.CurrentUser != null)
                     {
-                        embed.WithFooter($"Player to make a choice: {bj.CurrentUser.DiscordUser.ToString()}");
+                        embed.WithFooter(GetText("bj_player_to_move", 
+                                                 bj.CurrentUser.DiscordUser.ToString()));
                     }
 
                     foreach (var p in bj.Players)
