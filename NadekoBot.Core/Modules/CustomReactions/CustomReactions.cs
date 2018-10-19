@@ -130,7 +130,7 @@ namespace NadekoBot.Modules.CustomReactions
                                                             str = "#️⃣" + str;
                                                         }
                                                         return str;
-                                                    }))), customReactions.Count(), 20)
+                                                    }))), customReactions.Count(), perPage)
                                 .ConfigureAwait(false);
         }
 
@@ -204,7 +204,7 @@ namespace NadekoBot.Modules.CustomReactions
                                                          .Skip(curPage * perPage)
                                                          .Take(perPage)
                                                          .Select(cr => $"**{cr.Key.Trim().ToLowerInvariant()}** `x{cr.Count()}`"))),
-                    ordered.Count, 20).ConfigureAwait(false);
+                    ordered.Count, perPage).ConfigureAwait(false);
             }
         }
 
