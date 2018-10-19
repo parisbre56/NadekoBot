@@ -410,13 +410,14 @@ namespace NadekoBot.Modules.CustomReactions.Services
 
         public IEnumerable<CustomReaction> GetCustomReactions(ulong? guildId)
         {
-            if (guildId == null)
+            if (guildId == null) {
                 return _globalReactions.Values;
-            else
-                ICollection<CustomReaction> t_gr = _guildReactions.GetOrAdd(guildId.Value, new ConcurrentDictionary<int, CustomReaction>()).Values;
-                List<CustomReaction> ret = new List<CustomReaction>(t_gr);
-                ret.AddRange(_globalReactions.Values);
-                return ret;
+            }
+            
+            ICollection<CustomReaction> t_gr = _guildReactions.GetOrAdd(guildId.Value, new ConcurrentDictionary<int, CustomReaction>()).Values;
+            List<CustomReaction> ret = new List<CustomReaction>(t_gr);
+            ret.AddRange(_globalReactions.Values);
+            return ret;
         }
 
         public CustomReaction GetCustomReaction(ulong? guildId, int id)
