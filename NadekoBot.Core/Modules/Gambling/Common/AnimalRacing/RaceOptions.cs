@@ -10,7 +10,7 @@ namespace NadekoBot.Core.Modules.Gambling.Common.AnimalRacing
 
         public void NormalizeOptions()
         {
-            if (this.StartTime < 10 || this.StartTime > 120)
+            if (this.StartTime < 10 || this.StartTime > 60*30)
                 this.StartTime = 20;
         }
     }
