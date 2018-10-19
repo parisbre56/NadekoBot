@@ -81,9 +81,11 @@ namespace NadekoBot.Modules.CustomReactions
 
         [NadekoCommand, Usage, Description, Aliases]
         [Priority(1)]
-        public async Task ListCustReact(int page = 1)
+        public async Task ListCustReact(int page = 1, int perPage = 20)
         {
             if (--page < 0 || page > 999)
+                return;
+            if (perPage < 10 || perPage > 999)
                 return;
 
             var customReactions = _service.GetCustomReactions(Context.Guild?.Id);
@@ -98,11 +100,15 @@ namespace NadekoBot.Modules.CustomReactions
                 new EmbedBuilder().WithOkColor()
                     .WithTitle(GetText("name"))
                     .WithDescription(string.Join("\n", customReactions.OrderBy(cr => cr.Trigger)
-                                                    .Skip(curPage * 20)
-                                                    .Take(20)
+                                                    .Skip(curPage * perPage)
+                                                    .Take(perPage)
                                                     .Select(cr =>
                                                     {
                                                         var str = $"`#{cr.Id}` {cr.Trigger}";
+                                                        if (cr.ContainsAnywhere)
+                                                        {
+                                                            str = "*️⃣"+ str;
+                                                        }
                                                         if (cr.AutoDeleteTrigger)
                                                         {
                                                             str = "🗑" + str;
@@ -121,7 +127,7 @@ namespace NadekoBot.Modules.CustomReactions
                                                         }
                                                         if (cr.IsRegex)
                                                         {
-                                                            str = "#️⃣" + str + System.Environment.NewLine + "Regex: '" + cr.Regex + "'";
+                                                            str = "#️⃣" + str;
                                                         }
                                                         return str;
                                                     }))), customReactions.Count(), 20)
@@ -152,6 +158,7 @@ namespace NadekoBot.Modules.CustomReactions
                                                             response = y.Response, 
                                                             isRegex = y.IsRegex,
                                                             regex = y.Regex,
+                                                            containsAnywhere = y.ContainsAnywhere,
                                                             ownerOnly = y.OwnerOnly,
                                                             autoDeleteTrigger = y.AutoDeleteTrigger,
                                                             dmResponse = y.DmResponse,
@@ -170,10 +177,13 @@ namespace NadekoBot.Modules.CustomReactions
         }
 
         [NadekoCommand, Usage, Description, Aliases]
-        public async Task ListCustReactG(int page = 1)
+        public async Task ListCustReactG(int page = 1, int perPage = 20)
         {
             if (--page < 0 || page > 9999)
                 return;
+            if (perPage < 10 || perPage > 999)
+                return;
+
             var customReactions = _service.GetCustomReactions(Context.Guild?.Id);
 
             if (customReactions == null || !customReactions.Any())
@@ -191,8 +201,8 @@ namespace NadekoBot.Modules.CustomReactions
                     new EmbedBuilder().WithOkColor()
                         .WithTitle(GetText("name"))
                         .WithDescription(string.Join("\r\n", ordered
-                                                         .Skip(curPage * 20)
-                                                         .Take(20)
+                                                         .Skip(curPage * perPage)
+                                                         .Take(perPage)
                                                          .Select(cr => $"**{cr.Key.Trim().ToLowerInvariant()}** `x{cr.Count()}`"))),
                     ordered.Count, 20).ConfigureAwait(false);
             }
@@ -210,10 +220,26 @@ namespace NadekoBot.Modules.CustomReactions
             }
             else
             {
+            id = y.Id, 
+                                                            response = y.Response, 
+                                                            isRegex = y.IsRegex,
+                                                            regex = y.Regex,
+                                                            containsAnywhere = y.ContainsAnywhere,
+                                                            ownerOnly = y.OwnerOnly,
+                                                            autoDeleteTrigger = y.AutoDeleteTrigger,
+                                                            dmResponse = y.DmResponse,
+                                                            isGlobal = y.IsGlobal
                 await Context.Channel.EmbedAsync(new EmbedBuilder().WithOkColor()
                     .WithDescription($"#{id}")
                     .AddField(efb => efb.WithName(GetText("trigger")).WithValue(found.Trigger.TrimTo(1024)))
                     .AddField(efb => efb.WithName(GetText("response")).WithValue((found.Response + "\n```css\n" + found.Response).TrimTo(1020) + "```"))
+                    .AddField(efb => efb.WithName("IsRegex").WithValue(found.IsRegex))
+                    .AddField(efb => efb.WithName("Regex").WithValue(found.Regex))
+                    .AddField(efb => efb.WithName("ContainsAnywhere").WithValue(found.ContainsAnywhere))
+                    .AddField(efb => efb.WithName("OwnerOnly").WithValue(found.OwnerOnly))
+                    .AddField(efb => efb.WithName("AutoDeleteTrigger").WithValue(found.AutoDeleteTrigger))
+                    .AddField(efb => efb.WithName("DmResponse").WithValue(found.DmResponse))
+                    .AddField(efb => efb.WithName("IsGlobal").WithValue(found.IsGlobal))
                     ).ConfigureAwait(false);
             }
         }
