@@ -413,8 +413,8 @@ namespace NadekoBot.Modules.CustomReactions.Services
             if (guildId == null)
                 return _globalReactions.Values;
             else
-                var t_gr = _guildReactions.GetOrAdd(guildId.Value, new ConcurrentDictionary<int, CustomReaction>()).Values;
-                var ret = new List<CustomReaction>(t_gr);
+                ICollection<CustomReaction> t_gr = _guildReactions.GetOrAdd(guildId.Value, new ConcurrentDictionary<int, CustomReaction>()).Values;
+                List<CustomReaction> ret = new List<CustomReaction>(t_gr);
                 ret.AddRange(_globalReactions.Values);
                 return ret;
         }
