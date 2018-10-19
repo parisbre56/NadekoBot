@@ -224,13 +224,13 @@ namespace NadekoBot.Modules.CustomReactions
                     .WithDescription($"#{id}")
                     .AddField(efb => efb.WithName(GetText("trigger")).WithValue(found.Trigger.TrimTo(1024)))
                     .AddField(efb => efb.WithName(GetText("response")).WithValue((found.Response + "\n```css\n" + found.Response).TrimTo(1020) + "```"))
-                    .AddField(efb => efb.WithName("IsRegex").WithValue(found.IsRegex))
-                    .AddField(efb => efb.WithName("Regex").WithValue(found.Regex))
-                    .AddField(efb => efb.WithName("ContainsAnywhere").WithValue(found.ContainsAnywhere))
-                    .AddField(efb => efb.WithName("OwnerOnly").WithValue(found.OwnerOnly))
-                    .AddField(efb => efb.WithName("AutoDeleteTrigger").WithValue(found.AutoDeleteTrigger))
-                    .AddField(efb => efb.WithName("DmResponse").WithValue(found.DmResponse))
-                    .AddField(efb => efb.WithName("IsGlobal").WithValue(found.IsGlobal))
+                    .AddField(efb => efb.WithName("IsRegex").WithValue(System.Convert.ToString(found.IsRegex)))
+                    .AddField(efb => efb.WithName("Regex").WithValue(System.Convert.ToString(found.Regex)))
+                    .AddField(efb => efb.WithName("ContainsAnywhere").WithValue(System.Convert.ToString(found.ContainsAnywhere)))
+                    .AddField(efb => efb.WithName("OwnerOnly").WithValue(System.Convert.ToString(found.OwnerOnly)))
+                    .AddField(efb => efb.WithName("AutoDeleteTrigger").WithValue(System.Convert.ToString(found.AutoDeleteTrigger)))
+                    .AddField(efb => efb.WithName("DmResponse").WithValue(System.Convert.ToString(found.DmResponse)))
+                    .AddField(efb => efb.WithName("IsGlobal").WithValue(System.Convert.ToString(found.IsGlobal)))
                     ).ConfigureAwait(false);
             }
         }
