@@ -111,6 +111,18 @@ namespace NadekoBot.Modules.CustomReactions
                                                         {
                                                             str = "📪" + str;
                                                         }
+                                                        if (cr.IsGlobal)
+                                                        {
+                                                            str = "🌍" + str;
+                                                        }
+                                                        if (cr.OwnerOnly)
+                                                        {
+                                                            str = "🕴️" + str;
+                                                        }
+                                                        if (cr.IsRegex)
+                                                        {
+                                                            str = "#️⃣" + str + System.Environment.NewLine + "Regex: '" + cr.Regex + "'";
+                                                        }
                                                         return str;
                                                     }))), customReactions.Count(), 20)
                                 .ConfigureAwait(false);
@@ -135,7 +147,16 @@ namespace NadekoBot.Modules.CustomReactions
 
             using (var txtStream = await customReactions.GroupBy(cr => cr.Trigger)
                                                         .OrderBy(cr => cr.Key)
-                                                        .Select(cr => new { Trigger = cr.Key, Responses = cr.Select(y => new { id = y.Id, text = y.Response }).ToList() })
+                                                        .Select(cr => new { Trigger = cr.Key, Responses = cr.Select(y => new { 
+                                                            id = y.Id, 
+                                                            response = y.Response, 
+                                                            isRegex = y.IsRegex,
+                                                            regex = y.Regex,
+                                                            ownerOnly = y.OwnerOnly,
+                                                            autoDeleteTrigger = y.AutoDeleteTrigger,
+                                                            dmResponse = y.DmResponse,
+                                                            isGlobal = y.IsGlobal
+                                                        }).ToList() })
                                                         .ToJson()
                                                         .ToStream()
                                                         .ConfigureAwait(false))
