@@ -220,15 +220,6 @@ namespace NadekoBot.Modules.CustomReactions
             }
             else
             {
-            id = y.Id, 
-                                                            response = y.Response, 
-                                                            isRegex = y.IsRegex,
-                                                            regex = y.Regex,
-                                                            containsAnywhere = y.ContainsAnywhere,
-                                                            ownerOnly = y.OwnerOnly,
-                                                            autoDeleteTrigger = y.AutoDeleteTrigger,
-                                                            dmResponse = y.DmResponse,
-                                                            isGlobal = y.IsGlobal
                 await Context.Channel.EmbedAsync(new EmbedBuilder().WithOkColor()
                     .WithDescription($"#{id}")
                     .AddField(efb => efb.WithName(GetText("trigger")).WithValue(found.Trigger.TrimTo(1024)))
