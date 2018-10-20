@@ -237,7 +237,7 @@ namespace NadekoBot.Modules.CustomReactions
             return new EmbedBuilder().WithDescription(retStrings[0] 
                                                       + (retStrings.Count > 1 
                                                         ? System.Environment.NewLine + "truncated" 
-                                                        : "")
+                                                        : ""))
                                      .WithOkColor()
                                      .WithTitle(GetText("name"));
                                                     
