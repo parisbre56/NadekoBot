@@ -209,7 +209,7 @@ namespace NadekoBot.Modules.CustomReactions
             }
         }
         
-        public EmbedBuilder GetCustReactGEmbed(List<CustomReaction> ordered, int curPage, int perPage) 
+        public EmbedBuilder GetCustReactGEmbed(List<IGrouping<string, CustomReaction>> ordered, int curPage, int perPage) 
         {
             string retString = string.Join("\r\n", ordered
                                                          .Skip(curPage * perPage)
