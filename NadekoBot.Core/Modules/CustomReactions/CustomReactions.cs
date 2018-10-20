@@ -234,13 +234,44 @@ namespace NadekoBot.Modules.CustomReactions
                 }
                 retStrings.Add(retString);
             }
-            return new EmbedBuilder().WithDescription(retStrings[0] 
-                                                      + (retStrings.Count > 1 
-                                                        ? System.Environment.NewLine + "truncated" 
-                                                        : "")
-                                     .WithOkColor()
-                                     .WithTitle(GetText("name"));
+            return new LongDescriptionEmbedBuilder().WithDescriptions(retStrings)
+                                                    .WithOkColor()
+                                                    .WithTitle(GetText("name"))
                                                     
+        }
+        
+        public class LongDescriptionEmbedBuilder : EmbedBuilder {
+            public List<string> descriptions;
+            
+            public LongDescriptionEmbedBuilder WithDescriptions(List<string> givenDescs) {
+                this.WithDescription(givenDescs[0]);
+                descriptions = givenDescs;
+                return this;
+            }
+            
+            public new Embed Build() {
+                EmbedCustom retVal = new EmbedCustom();
+                retVal.customTitle = this.Title;
+                retVal.customDesc = descriptions.Aggregate((i, j) => i + j);
+                return retVal;
+            }
+        }
+        
+        public class EmbedCustom : Embed {
+            public string customDesc;
+            public string customTitle;
+            
+            public new string Description {
+                get {
+                    return customDesc;
+                }
+            }
+            
+            public new string Title {
+                get {
+                    return customTitle;
+                }
+            }
         }
 
         [NadekoCommand, Usage, Description, Aliases]
