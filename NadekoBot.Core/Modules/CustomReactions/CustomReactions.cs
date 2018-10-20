@@ -211,16 +211,28 @@ namespace NadekoBot.Modules.CustomReactions
         
         public EmbedBuilder GetCustReactGEmbed(List<IGrouping<string, CustomReaction>> ordered, int curPage, int perPage) 
         {
-            string retString = string.Join("\r\n", ordered
-                                                         .Skip(curPage * perPage)
-                                                         .Take(perPage)
-                                                         .Select(cr => $"**{cr.Key.Trim().ToLowerInvariant()}** `x{cr.Count()}`"));
-            if(retString.Length > EmbedBuilder.MaxDescriptionLength) {
-                retString = retString.Substring(0, EmbedBuilder.MaxDescriptionLength);
+            string retString = "";
+            string newRetString = "";
+            int breakingPoint = -1;
+            
+            int startPoint = currPage*perPage;
+            int endPoint = startPoint + perPage;
+            for(int i = startPoint; i < endPoint; ++i) {
+                IGrouping<string, CustomReaction>> selected = ordered[i];
+                newRetString = retString + "**" + selected.Key.Trim().ToLowerInvariant() + "** `x" + selected.Count() + "`";
+                if(newRetString.Length > EmbedBuilder.MaxDescriptionLength)
+                {
+                    breakingPoint = i;
+                    break;
+                }
             }
             return new EmbedBuilder().WithOkColor()
                                      .WithTitle(GetText("name"))
                                      .WithDescription(retString);
+        }
+        
+        public class LongDescriptionEmbedBuilder : EmbedBuilder {
+            
         }
 
         [NadekoCommand, Usage, Description, Aliases]
