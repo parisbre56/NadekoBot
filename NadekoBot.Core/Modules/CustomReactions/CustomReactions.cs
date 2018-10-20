@@ -215,7 +215,7 @@ namespace NadekoBot.Modules.CustomReactions
             string newRetString = "";
             int breakingPoint = -1;
             
-            int startPoint = curPage*perPage;
+            int startPoint = currPage*perPage;
             int endPoint = startPoint + perPage;
             for(int i = startPoint; i < endPoint; ++i) {
                 IGrouping<string, CustomReaction>> selected = ordered[i];
