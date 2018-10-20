@@ -8,6 +8,7 @@ using NadekoBot.Modules.CustomReactions.Services;
 using NadekoBot.Core.Services.Database;
 using NadekoBot.Core.Services.Database.Models;
 using System.Linq;
+using System.Collections;
 using System.Threading.Tasks;
 
 namespace NadekoBot.Modules.CustomReactions
