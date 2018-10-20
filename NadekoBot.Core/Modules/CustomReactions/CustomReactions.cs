@@ -211,65 +211,28 @@ namespace NadekoBot.Modules.CustomReactions
         
         public EmbedBuilder GetCustReactGEmbed(List<IGrouping<string, CustomReaction>> ordered, int curPage, int perPage) 
         {
-            List<string> retStrings = new List<string>();
+            string retString = "";
+            string newRetString = "";
+            int breakingPoint = -1;
             
             int startPoint = curPage*perPage;
             int endPoint = startPoint + perPage;
-            int finalPoint = endPoint - 1;
-            int i = startPoint;
-            while(i < endPoint) {
-                string retString = "";
-                string newRetString = "";
-                
-                for(; i < endPoint; ++i) {
-                    IGrouping<string, CustomReaction> selected = ordered[i];
-                    newRetString = retString 
-                                    + "**" + selected.Key.Trim().ToLowerInvariant() 
-                                    + "** `x" + selected.Count() + "`"
-                                    + (i == finalPoint ? "" : System.Environment.Newline) ;
-                    if(newRetString.Length > EmbedBuilder.MaxDescriptionLength)
-                    {
-                        break;
-                    }
+            for(int i = startPoint; i < endPoint; ++i) {
+                IGrouping<string, CustomReaction> selected = ordered[i];
+                newRetString = retString + "**" + selected.Key.Trim().ToLowerInvariant() + "** `x" + selected.Count() + "`";
+                if(newRetString.Length > EmbedBuilder.MaxDescriptionLength)
+                {
+                    breakingPoint = i;
+                    break;
                 }
-                retStrings.Add(retString);
             }
-            return new LongDescriptionEmbedBuilder().WithOkColor()
-                                                    .WithTitle(GetText("name"))
-                                                    .WithDescriptions(retString);
+            return new EmbedBuilder().WithOkColor()
+                                     .WithTitle(GetText("name"))
+                                     .WithDescription(retString);
         }
         
         public class LongDescriptionEmbedBuilder : EmbedBuilder {
-            public List<string> descriptions;
             
-            public LongDescriptionEmbedBuilder WithDescriptions(List<string> givenDescs) {
-                descriptions = givenDescs;
-                return this;
-            }
-            
-            public Embed Build() {
-                EmbedCustom retVal = new EmbedCustom();
-                retVal.customTitle = this.Title;
-                retVal.customDesc = descriptions.Aggregate((i, j) => i + j);
-                return retVal;
-            }
-        }
-        
-        public class EmbedCustom : Embed {
-            public string customDesc;
-            public string customTitle;
-            
-            public override string Description {
-                get {
-                    return customDesc;
-                }
-            }
-            
-            public override string Title {
-                get {
-                    return customTitle;
-                }
-            }
         }
 
         [NadekoCommand, Usage, Description, Aliases]
