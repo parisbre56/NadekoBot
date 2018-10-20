@@ -215,6 +215,9 @@ namespace NadekoBot.Modules.CustomReactions
                                                          .Skip(curPage * perPage)
                                                          .Take(perPage)
                                                          .Select(cr => $"**{cr.Key.Trim().ToLowerInvariant()}** `x{cr.Count()}`"));
+            if(retString.Length > EmbedBuilder.MaxDescriptionLength) {
+                retString = retString.Substring(0, EmbedBuilder.MaxDescriptionLength);
+            }
             return new EmbedBuilder().WithOkColor()
                                      .WithTitle(GetText("name"))
                                      .WithDescription(retString);
