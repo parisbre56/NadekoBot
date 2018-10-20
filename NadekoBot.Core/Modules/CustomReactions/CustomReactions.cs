@@ -214,9 +214,10 @@ namespace NadekoBot.Modules.CustomReactions
             string retString = string.Join("\r\n", ordered
                                                          .Skip(curPage * perPage)
                                                          .Take(perPage)
-                                                         .Select(cr => $"**{cr.Key.Trim().ToLowerInvariant()}** `x{cr.Count()}`"));
+                                                         .Select(cr => $"{cr.Key.Trim().ToLowerInvariant()} x{cr.Count()}"));
             if(retString.Length > EmbedBuilder.MaxDescriptionLength) {
-                retString = retString.Substring(0, EmbedBuilder.MaxDescriptionLength);
+                string truncString = "\r\n-truncated-";
+                retString = retString.Substring(0, EmbedBuilder.MaxDescriptionLength-truncString.Length)+truncString;
             }
             return new EmbedBuilder().WithOkColor()
                                      .WithTitle(GetText("name"))
