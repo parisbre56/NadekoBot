@@ -5,6 +5,8 @@ using NadekoBot.Common.Attributes;
 using NadekoBot.Core.Services;
 using NadekoBot.Extensions;
 using NadekoBot.Modules.CustomReactions.Services;
+using NadekoBot.Core.Services.Database;
+using NadekoBot.Core.Services.Database.Models;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -205,7 +207,7 @@ namespace NadekoBot.Modules.CustomReactions
             }
         }
         
-        public EmbedBuilder GetCustReactGEmbed(List<CustomReaction> ordered, int curPage, int perPage) 
+        public EmbedBuilder GetCustReactGEmbed(IList<CustomReaction> ordered, int curPage, int perPage) 
         {
             string retString = string.Join("\r\n", ordered
                                                          .Skip(curPage * perPage)
