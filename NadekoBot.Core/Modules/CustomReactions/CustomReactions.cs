@@ -247,7 +247,7 @@ namespace NadekoBot.Modules.CustomReactions
                 return this;
             }
             
-            public new Embed Build() {
+            public Embed Build() {
                 EmbedCustom retVal = new EmbedCustom();
                 retVal.customTitle = this.Title;
                 retVal.customDesc = descriptions.Aggregate((i, j) => i + j);
@@ -259,13 +259,13 @@ namespace NadekoBot.Modules.CustomReactions
             public string customDesc;
             public string customTitle;
             
-            public new string Description {
+            public override string Description {
                 get {
                     return customDesc;
                 }
             }
             
-            public new string Title {
+            public override string Title {
                 get {
                     return customTitle;
                 }
