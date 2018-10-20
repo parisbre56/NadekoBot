@@ -218,7 +218,7 @@ namespace NadekoBot.Modules.CustomReactions
             int startPoint = curPage*perPage;
             int endPoint = startPoint + perPage;
             for(int i = startPoint; i < endPoint; ++i) {
-                IGrouping<string, CustomReaction>> selected = ordered[i];
+                IGrouping<string, CustomReaction> selected = ordered[i];
                 newRetString = retString + "**" + selected.Key.Trim().ToLowerInvariant() + "** `x" + selected.Count() + "`";
                 if(newRetString.Length > EmbedBuilder.MaxDescriptionLength)
                 {
