@@ -217,11 +217,11 @@ namespace NadekoBot.Modules.CustomReactions
             int endPoint = startPoint + perPage;
             int finalPoint = endPoint - 1;
             int i = startPoint;
-            while(i < endPoint && i < ordered.Count) {
+            while(i < endPoint) {
                 string retString = "";
                 string newRetString = "";
                 
-                for(; i < endPoint && i < ordered.Count; ++i) {
+                for(; i < endPoint; ++i) {
                     IGrouping<string, CustomReaction> selected = ordered[i];
                     newRetString = retString 
                                     + "**" + selected.Key.Trim().ToLowerInvariant() 
