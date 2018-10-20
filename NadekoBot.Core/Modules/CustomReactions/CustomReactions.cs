@@ -226,7 +226,7 @@ namespace NadekoBot.Modules.CustomReactions
                     newRetString = retString 
                                     + "**" + selected.Key.Trim().ToLowerInvariant() 
                                     + "** `x" + selected.Count() + "`"
-                                    + (i == finalPoint ? "" : System.Environment.Newline) ;
+                                    + (i == finalPoint ? "" : System.Environment.NewLine) ;
                     if(newRetString.Length > EmbedBuilder.MaxDescriptionLength)
                     {
                         break;
@@ -234,15 +234,17 @@ namespace NadekoBot.Modules.CustomReactions
                 }
                 retStrings.Add(retString);
             }
-            return new LongDescriptionEmbedBuilder().WithOkColor()
+            return new LongDescriptionEmbedBuilder().WithDescriptions(retStrings)
+                                                    .WithOkColor()
                                                     .WithTitle(GetText("name"))
-                                                    .WithDescriptions(retString);
+                                                    
         }
         
         public class LongDescriptionEmbedBuilder : EmbedBuilder {
             public List<string> descriptions;
             
             public LongDescriptionEmbedBuilder WithDescriptions(List<string> givenDescs) {
+                this.WithDescription(givenDescs[0]);
                 descriptions = givenDescs;
                 return this;
             }
