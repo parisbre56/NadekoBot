@@ -197,12 +197,23 @@ namespace NadekoBot.Modules.CustomReactions
                     .OrderBy(cr => cr.Key)
                     .ToList();
 
-                await Context.SendPaginatedConfirmAsync(page, (curPage) =>
-                    string.Join("\r\n", ordered.Skip(curPage * perPage)
-                                               .Take(perPage)
-                                               .Select(cr => $"**{cr.Key.Trim().ToLowerInvariant()}** `x{cr.Count()}`")),
-                    ordered.Count, perPage).ConfigureAwait(false);
+                await Context.SendPaginatedConfirmAsync(page, 
+                                                        (curPage) => GetCustReactGEmbed(ordered,curPage,perPage),
+                                                        ordered.Count, 
+                                                        perPage)
+                             .ConfigureAwait(false);
             }
+        }
+        
+        public EmbedBuilder GetCustReactGEmbed(List<CustomReaction> ordered, int curPage, int perPage) 
+        {
+            string retString = string.Join("\r\n", ordered
+                                                         .Skip(curPage * perPage)
+                                                         .Take(perPage)
+                                                         .Select(cr => $"**{cr.Key.Trim().ToLowerInvariant()}** `x{cr.Count()}`"));
+            return new EmbedBuilder().WithOkColor()
+                                     .WithTitle(GetText("name"))
+                                     .WithDescription(retString);
         }
 
         [NadekoCommand, Usage, Description, Aliases]
