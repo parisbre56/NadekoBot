@@ -198,12 +198,9 @@ namespace NadekoBot.Modules.CustomReactions
                     .ToList();
 
                 await Context.SendPaginatedConfirmAsync(page, (curPage) =>
-                    new EmbedBuilder().WithOkColor()
-                        .WithTitle(GetText("name"))
-                        .WithDescription(string.Join("\r\n", ordered
-                                                         .Skip(curPage * perPage)
-                                                         .Take(perPage)
-                                                         .Select(cr => $"**{cr.Key.Trim().ToLowerInvariant()}** `x{cr.Count()}`"))),
+                    string.Join("\r\n", ordered.Skip(curPage * perPage)
+                                               .Take(perPage)
+                                               .Select(cr => $"**{cr.Key.Trim().ToLowerInvariant()}** `x{cr.Count()}`")),
                     ordered.Count, perPage).ConfigureAwait(false);
             }
         }
