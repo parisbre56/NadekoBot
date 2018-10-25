@@ -300,9 +300,13 @@ namespace NadekoBot.Modules.Searches
 
                 var responseString = System.Text.Encoding.Default.GetString(response);
                 
+                if(!responseString.StartsWith("http")) {
+                    responseString = "http://"+responseString;
+                }
+                
                 await Context.Channel.EmbedAsync(new EmbedBuilder().WithColor(NadekoBot.OkColor)
                                     .WithTitle(GetText("sketchified_url"))
-                                    //.WithUrl(responseString)
+                                    .WithUrl(responseString)
                                     .WithDescription(responseString)
                                     .AddField(efb => efb.WithName(GetText("original_url"))
                                                         .WithValue($"{query}")))
