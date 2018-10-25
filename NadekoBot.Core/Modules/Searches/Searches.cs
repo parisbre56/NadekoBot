@@ -303,7 +303,7 @@ namespace NadekoBot.Modules.Searches
                 await Context.Channel.EmbedAsync(new EmbedBuilder().WithColor(NadekoBot.OkColor)
                                     .setDescription(responseString)
                                     .AddField(efb => efb.WithName(GetText("original_url"))
-                                                        .WithValue($"<{query}>"))
+                                                        .WithValue($"<{query}>")))
                                     .ConfigureAwait(false);
             }
         }
