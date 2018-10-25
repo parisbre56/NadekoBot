@@ -24,6 +24,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Collections.Specialized;
 using Configuration = AngleSharp.Configuration;
 
 namespace NadekoBot.Modules.Searches
@@ -285,6 +286,27 @@ namespace NadekoBot.Modules.Searches
 
             await Context.Channel.SendConfirmAsync("<" + await _google.ShortenUrl($"http://lmgtfy.com/?q={ Uri.EscapeUriString(ffs) }").ConfigureAwait(false) + ">")
                            .ConfigureAwait(false);
+        }
+        
+        [NadekoCommand, Usage, Description, Aliases]
+        public async Task Sketchify([Remainder] string query)
+        {
+            using (var client = new WebClient())
+            {
+                var values = new NameValueCollection();
+                values["long_url"] = query;
+
+                var response = client.UploadValues("http://verylegit.link/sketchify", values);
+
+                var responseString = Encoding.Default.GetString(response);
+                
+                await Context.Channel.EmbedAsync(new EmbedBuilder().WithColor(NadekoBot.OkColor)
+                                    .AddField(efb => efb.WithName(GetText("original_url"))
+                                                        .WithValue($"<{query}>"))
+                                    .AddField(efb => efb.WithName(GetText("short_url"))
+                                                        .WithValue($"<{responseString}>")))
+                                    .ConfigureAwait(false);
+            }
         }
 
         // done in 3.0
