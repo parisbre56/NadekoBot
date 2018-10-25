@@ -90,10 +90,12 @@ namespace NadekoBot.Modules.Searches.Common
                             _cache.Add(dledImg);
                     }
 #endif
-                    _log.Warn("Tags: "
-                              +(img.Tags == null 
-                                ? "null" 
-                                : img.Tags.ToString()));
+                    if(img != null) {
+                        _log.Warn("Tags: "
+                                  +(img.Tags == null 
+                                    ? "null" 
+                                    : img.Tags.ToString()));
+                    }
                     return toReturn;
                 }
             }
