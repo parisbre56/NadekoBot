@@ -302,7 +302,7 @@ namespace NadekoBot.Modules.Searches
                 
                 await Context.Channel.EmbedAsync(new EmbedBuilder().WithColor(NadekoBot.OkColor)
                                     .WithTitle(GetText("sketchified_url"))
-                                    .WithUrl(responseString)
+                                    //.WithUrl(responseString)
                                     .WithDescription(responseString)
                                     .AddField(efb => efb.WithName(GetText("original_url"))
                                                         .WithValue($"{query}")))
