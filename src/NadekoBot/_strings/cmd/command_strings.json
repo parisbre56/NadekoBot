@@ -1645,6 +1645,13 @@
       "{0}lmgtfy query"
     ]
   },
+  "sketchify": {
+    "Cmd": "sketchify",
+    "Desc": "Produce a sketchy-looking link to the given web page.",
+    "Usage": [
+      "{0}sketchify www.google.gr"
+    ]
+  }
   "google": {
     "Cmd": "google g",
     "Desc": "Get a Google search link for some terms.",
