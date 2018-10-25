@@ -298,13 +298,13 @@ namespace NadekoBot.Modules.Searches
 
                 var response = client.UploadValues("http://verylegit.link/sketchify", values);
 
-                var responseString = System.Text.Encoding.Default.GetString(response);
+                var responseString = "https://" + System.Text.Encoding.Default.GetString(response);
                 
                 await Context.Channel.EmbedAsync(new EmbedBuilder().WithColor(NadekoBot.OkColor)
                                     .AddField(efb => efb.WithName(GetText("original_url"))
-                                                        .WithValue($"{query}"))
+                                                        .WithValue($"<{query}>"))
                                     .AddField(efb => efb.WithName(GetText("short_url"))
-                                                        .WithValue($"{responseString}")))
+                                                        .WithValue($"<{responseString}>")))
                                     .ConfigureAwait(false);
             }
         }
