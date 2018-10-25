@@ -61,11 +61,17 @@ namespace NadekoBot.Modules.Searches.Common
                 else
                     img = imgs[_rng.Next(imgs.Length)];
 
-                _log.Warn("Blacklisted: "+(blacklistedTags == null ? "null" : blacklistedTags.ToString()));
+                _log.Warn("Blacklisted: "
+                          +(blacklistedTags == null 
+                            ? "null" 
+                            : blacklistedTags.ToString()));
                 if (img != null)
                 {
                     _cache.Remove(img);
-                    _log.Warn("Tags: "+(img.Tags == null ? "null" : img.Tags.ToString()));
+                    _log.Warn("Tags: "
+                              +(img.Tags == null 
+                                ? "null" 
+                                : img.Tags.ToString()));
                     return img;
                 }
                 else
@@ -84,7 +90,10 @@ namespace NadekoBot.Modules.Searches.Common
                             _cache.Add(dledImg);
                     }
 #endif
-                    _log.Warn("Tags: "+(img.Tags == null ? "null" : img.Tags.ToString()));
+                    _log.Warn("Tags: "
+                              +(img.Tags == null 
+                                ? "null" 
+                                : img.Tags.ToString()));
                     return toReturn;
                 }
             }
