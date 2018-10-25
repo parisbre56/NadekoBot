@@ -397,8 +397,9 @@ namespace NadekoBot.Modules.NSFW
             else
             {
                 var embed = new EmbedBuilder().WithOkColor()
+                    .WithTitle(type.ToString())
                     .WithDescription($"{Context.User} [{tag ?? "url"}]({imgObj}) ")
-                    .WithFooter(efb => efb.WithText(type.ToString()));
+                    .WithFooter(efb => efb.WithText( "Image Tags: "+string.Join(",", imgObj.Tags) ));
 
                 if (Uri.IsWellFormedUriString(imgObj.FileUrl, UriKind.Absolute))
                     embed.WithImageUrl(imgObj.FileUrl);
