@@ -301,10 +301,9 @@ namespace NadekoBot.Modules.Searches
                 var responseString = System.Text.Encoding.Default.GetString(response);
                 
                 await Context.Channel.EmbedAsync(new EmbedBuilder().WithColor(NadekoBot.OkColor)
+                                    .setDescription(responseString)
                                     .AddField(efb => efb.WithName(GetText("original_url"))
-                                                        .WithValue($"[{query}]({query})"))
-                                    .AddField(efb => efb.WithName(GetText("short_url"))
-                                                        .WithValue($"[{responseString}]({responseString})")))
+                                                        .WithValue($"<{query}>"))
                                     .ConfigureAwait(false);
             }
         }
