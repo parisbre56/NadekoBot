@@ -941,6 +941,7 @@
   "administration_restart_fail": "You must setup RestartCommand in your credentials.json",
   "administration_restarting": "Restarting.",
   "administration_nickTooLong": "Nickname too long. Please limit it to 32 characters.",
+  "administration_nick_wrong_role": "Insufficient permissions to change nickname. Your max role needs to be greater than or equal to their max role.",
   "customreactions_edit_fail": "Custom reaction with that ID does not exist.",
   "searches_streaming": "Streaming",
   "searches_followers": "Followers",
