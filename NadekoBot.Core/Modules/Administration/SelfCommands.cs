@@ -374,6 +374,11 @@ namespace NadekoBot.Modules.Administration
                     return;
                 }
                 
+                if(((IGuildUser)Context.User).RoleIds.Max() < gu.RoleIds.Max()) {
+                    await ReplyErrorLocalized("nick_wrong_role").ConfigureAwait(false);
+                    return;
+                }
+                
                 await gu.ModifyAsync(u => u.Nickname = newNick).ConfigureAwait(false);
 
                 await ReplyConfirmLocalized("user_nick", Format.Bold(gu.ToString()), Format.Bold(newNick) ?? "-").ConfigureAwait(false);
