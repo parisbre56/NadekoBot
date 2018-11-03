@@ -348,6 +348,12 @@ namespace NadekoBot.Modules.Administration
             {
                 if (string.IsNullOrWhiteSpace(newNick))
                     return;
+                
+                if(newNick.Length > 32) {
+                    await ReplyErrorLocalized("nickTooLong").ConfigureAwait(false);
+                    return;
+                }
+                
                 var curUser = await Context.Guild.GetCurrentUserAsync().ConfigureAwait(false);
                 await curUser.ModifyAsync(u => u.Nickname = newNick).ConfigureAwait(false);
 
@@ -360,6 +366,14 @@ namespace NadekoBot.Modules.Administration
             [Priority(1)]
             public async Task SetNick(IGuildUser gu, [Remainder] string newNick = null)
             {
+                if (string.IsNullOrWhiteSpace(newNick))
+                    return;
+                
+                if(newNick.Length > 32) {
+                    await ReplyErrorLocalized("nickTooLong").ConfigureAwait(false);
+                    return;
+                }
+                
                 await gu.ModifyAsync(u => u.Nickname = newNick).ConfigureAwait(false);
 
                 await ReplyConfirmLocalized("user_nick", Format.Bold(gu.ToString()), Format.Bold(newNick) ?? "-").ConfigureAwait(false);
