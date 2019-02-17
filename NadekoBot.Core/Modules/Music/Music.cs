@@ -470,12 +470,13 @@ namespace NadekoBot.Modules.Music
             {
                 using (var uow = _db.UnitOfWork)
                 {
-                    var pl = uow.MusicPlaylists.GetById(id);
+                    var pl = uow.MusicPlaylists.GetWithSongs(id);
 
                     if (pl != null)
                     {
                         if (_creds.IsOwner(Context.User) || pl.AuthorId == Context.User.Id)
                         {
+                            uow.PlaylistSongs.RemoveRange(pl.Songs.ToArray());
                             uow.MusicPlaylists.Remove(pl);
                             await uow.CompleteAsync();
                             success = true;
@@ -552,6 +553,11 @@ namespace NadekoBot.Modules.Music
                 {
                     hasId = true;
                     id = playlistsWithName.First().Id;
+                    for (var i = 0; i < playlistsWithName.Count; ++i)
+                    {
+                        var toRemove = uow.MusicPlaylists.GetWithSongs(playlistsWithName[i].Id);
+                        uow.PlaylistSongs.RemoveRange(toRemove.Songs.ToArray());
+                    }
                     uow.MusicPlaylists.RemoveRange(playlistsWithName.ToArray());
                 }
                 //Create the new list
