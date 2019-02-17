@@ -249,7 +249,7 @@ namespace NadekoBot.Modules.Music
 
             try { await mp.UpdateSongDurationsAsync().ConfigureAwait(false); } catch { }
 
-            const int itemsPerPage = 10;
+            const int itemsPerPage = 20;
 
             if (page == -1)
                 page = current / itemsPerPage;
@@ -265,19 +265,13 @@ namespace NadekoBot.Modules.Music
             EmbedBuilder printAction(int curPage)
             {
                 var startAt = itemsPerPage * curPage;
-                var number = 0 + startAt;
-                var desc = string.Join("\n", songs
-                        .Skip(startAt)
-                        .Take(itemsPerPage)
-                        .Select(v =>
-                        {
-                            if (number++ == current)
-                                return $"**⇒**`{number}.` {v.PrettyFullName}";
-                            else
-                                return $"`{number}.` {v.PrettyFullName}";
-                        }));
+                var limit = startAt + itemsPerPage;
+                if(limit > songs.Length)
+                {
+                    limit = songs.Length;
+                }
 
-                desc = $"`🔊` {songs[current].PrettyFullName}\n\n" + desc;
+                var desc = $"`🔊` {songs[current].PrettyFullName}\n\n";
 
                 var add = "";
                 if (mp.Stopped)
@@ -302,11 +296,26 @@ namespace NadekoBot.Modules.Music
                 if (!string.IsNullOrWhiteSpace(add))
                     desc = add + "\n" + desc;
 
+                if(desc.Length > 1000)
+                {
+                    desc = desc.Substring(0, 997) + "...";
+                }
+
                 var embed = new EmbedBuilder()
                     .WithAuthor(eab => eab.WithName(GetText("player_queue", curPage + 1, (songs.Length / itemsPerPage) + 1))
                         .WithMusicIcon())
-                    .WithDescription(desc)
-                    .WithFooter(ef => ef.WithText($"{mp.PrettyVolume} | {songs.Length} " +
+                    .WithDescription(desc);
+                for (var number = startAt; number < limit; ++number)
+                {
+                    var v = songs[number];
+                    String tempName = ((number == current) ? $"**⇒**`{v.PrettyFullName}`" : $"`{v.PrettyFullName}`");
+                    if(tempName.Length > 100)
+                    {
+                        tempName = tempName.Substring(0, 97) + "...";
+                    }
+                    embed = embed.AddField((number == current) ? $"⇒{number}." : $"{number}.", tempName);
+                }
+                embed = embed.WithFooter(ef => ef.WithText($"{mp.PrettyVolume} | {songs.Length} " +
                                                   $"{("tracks".SnPl(songs.Length))} | {totalStr}"))
                     .WithOkColor();
 
