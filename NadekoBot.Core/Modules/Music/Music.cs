@@ -538,7 +538,7 @@ namespace NadekoBot.Modules.Music
                     ProviderType = s.ProviderType,
                     Title = s.Title,
                     Query = s.Query,
-                    Order = i,
+                    PlOrder = i,
                 });
             }
 
@@ -586,7 +586,7 @@ namespace NadekoBot.Modules.Music
                 }
                 IUserMessage msg = null;
                 try { msg = await Context.Channel.SendMessageAsync(GetText("attempting_to_queue", Format.Bold(mpl.Songs.Count.ToString()))).ConfigureAwait(false); } catch (Exception ex) { _log.Warn(ex); }
-                foreach (var item in mpl.Songs.OrderBy(x => x.Order).ToList())
+                foreach (var item in mpl.Songs.OrderBy(x => x.PlOrder).ToList())
                 {
                     try
                     {
