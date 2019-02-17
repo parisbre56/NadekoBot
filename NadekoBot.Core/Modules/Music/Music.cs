@@ -249,7 +249,7 @@ namespace NadekoBot.Modules.Music
 
             try { await mp.UpdateSongDurationsAsync().ConfigureAwait(false); } catch { }
 
-            const int itemsPerPage = 20;
+            const int itemsPerPage = 7;
 
             if (page == -1)
                 page = current / itemsPerPage;
@@ -296,10 +296,7 @@ namespace NadekoBot.Modules.Music
                 if (!string.IsNullOrWhiteSpace(add))
                     desc = add + "\n" + desc;
 
-                if(desc.Length > 1000)
-                {
-                    desc = desc.Substring(0, 997) + "...";
-                }
+                desc = desc.TrimTo(997);
 
                 var embed = new EmbedBuilder()
                     .WithAuthor(eab => eab.WithName(GetText("player_queue", curPage + 1, (songs.Length / itemsPerPage) + 1))
@@ -308,11 +305,8 @@ namespace NadekoBot.Modules.Music
                 for (var number = startAt; number < limit; ++number)
                 {
                     var v = songs[number];
-                    String tempName = ((number == current) ? $"**⇒**`{v.PrettyFullName}`" : $"`{v.PrettyFullName}`");
-                    if(tempName.Length > 100)
-                    {
-                        tempName = tempName.Substring(0, 97) + "...";
-                    }
+                    String tempName = ((number == current) ? $"**⇒**{v.PrettyFullName}" : $"{v.PrettyFullName}");
+                    tempName = tempName.TrimTo(500);
                     embed = embed.AddField((number == current) ? $"⇒{number}." : $"{number}.", tempName);
                 }
                 embed = embed.WithFooter(ef => ef.WithText($"{mp.PrettyVolume} | {songs.Length} " +
