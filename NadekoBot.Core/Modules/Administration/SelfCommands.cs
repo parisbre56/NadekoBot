@@ -347,7 +347,7 @@ namespace NadekoBot.Modules.Administration
             public async Task SetNick([Remainder] string newNick = null)
             {
                 if (string.IsNullOrWhiteSpace(newNick))
-                    return;
+                    newNick = "Mrs.Bones";
                 
                 if(newNick.Length > 32) {
                     await ReplyErrorLocalized("nickTooLong").ConfigureAwait(false);
@@ -367,18 +367,26 @@ namespace NadekoBot.Modules.Administration
             public async Task SetNick(IGuildUser gu, [Remainder] string newNick = null)
             {
                 if (string.IsNullOrWhiteSpace(newNick))
-                    return;
+                    newNick = gu.Username;
                 
                 if(newNick.Length > 32) {
                     await ReplyErrorLocalized("nickTooLong").ConfigureAwait(false);
                     return;
                 }
-                
-                if(((IGuildUser)Context.User).RoleIds.Max() < gu.RoleIds.Max()) {
+
+                _log.Info("Caller: "+ ((IGuildUser)Context.User).Username);
+                _log.Info("Caller IDs: " + String.Join(", ", ((IGuildUser)Context.User).RoleIds.Select(a => Context.Guild.GetRole(a)).OrderBy(a => a.Position).Select(a => a.Id+": "+a.Position+": "+a.Name)));
+                _log.Info("Caller Max ID: " + ((IGuildUser)Context.User).RoleIds.Select(a => Context.Guild.GetRole(a).Position).Max());
+                _log.Info("Target: " + gu.Username);
+                _log.Info("Caller IDs: " + String.Join(", ", gu.RoleIds.Select(a => Context.Guild.GetRole(a)).OrderBy(a => a.Position).Select(a => a.Id + ": " + a.Position + ": " + a.Name)));
+                _log.Info("Caller Max ID: " + gu.RoleIds.Select(a => Context.Guild.GetRole(a).Position).Max());
+                if (((IGuildUser)Context.User).RoleIds.Select(a => Context.Guild.GetRole(a).Position).Max() < gu.RoleIds.Select(a => Context.Guild.GetRole(a).Position).Max()) {
+                    _log.Info("Did not pass permission check");
                     await ReplyErrorLocalized("nick_wrong_role").ConfigureAwait(false);
                     return;
                 }
-                
+                _log.Info("Passed permission check");
+
                 await gu.ModifyAsync(u => u.Nickname = newNick).ConfigureAwait(false);
 
                 await ReplyConfirmLocalized("user_nick", Format.Bold(gu.ToString()), Format.Bold(newNick) ?? "-").ConfigureAwait(false);
