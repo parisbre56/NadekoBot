@@ -305,7 +305,7 @@ namespace NadekoBot.Modules.Music
                 for (var number = startAt; number < limit; ++number)
                 {
                     var v = songs[number];
-                    String tempName = ((number == current) ? $"**⇒**{v.PrettyFullName}" : $"{v.PrettyFullName}");
+                    String tempName = ((number == current) ? $"**⇒** {v.PrettyFullName}" : $"{v.PrettyFullName}");
                     tempName = tempName.TrimTo(500);
                     embed = embed.AddField((number == current) ? $"⇒{number}." : $"{number}.", tempName);
                 }
@@ -527,14 +527,20 @@ namespace NadekoBot.Modules.Music
         {
             var mp = await _service.GetOrCreatePlayer(Context).ConfigureAwait(false);
 
-            var songs = mp.QueueArray().Songs
-                .Select(s => new PlaylistSong()
+            var songs = new List<PlaylistSong>();
+            var playList = mp.QueueArray().Songs;
+            for(var i = 0; i < playList.Length; ++i)
+            {
+                var s = playList[i];
+                songs.Add(new PlaylistSong()
                 {
                     Provider = s.Provider,
                     ProviderType = s.ProviderType,
                     Title = s.Title,
                     Query = s.Query,
-                }).ToList();
+                    Order = i,
+                });
+            }
 
             MusicPlaylist playlist;
             using (var uow = _db.UnitOfWork)
@@ -580,7 +586,7 @@ namespace NadekoBot.Modules.Music
                 }
                 IUserMessage msg = null;
                 try { msg = await Context.Channel.SendMessageAsync(GetText("attempting_to_queue", Format.Bold(mpl.Songs.Count.ToString()))).ConfigureAwait(false); } catch (Exception ex) { _log.Warn(ex); }
-                foreach (var item in mpl.Songs)
+                foreach (var item in mpl.Songs.OrderBy(x => x.Order).ToList())
                 {
                     try
                     {
