@@ -1371,7 +1371,7 @@
   },
   "save": {
     "Cmd": "save",
-    "Desc": "Saves a playlist under a certain name. Playlist name must be no longer than 20 characters and must not contain dashes.",
+    "Desc": "Saves a playlist under a certain name. Playlist name must be no longer than 20 characters and must not contain dashes. If a playlist with a certain name already exists, it will be updated.",
     "Usage": [
       "{0}save classical1"
     ]
@@ -1385,7 +1385,7 @@
   },
   "load": {
     "Cmd": "load",
-    "Desc": "Loads a saved playlist using its ID. Use `{0}pls` to list all saved playlists and `{0}save` to save new ones.",
+    "Desc": "Loads a saved playlist using its name or ID. Use `{0}pls` to list all saved playlists and `{0}save` to save new ones.",
     "Usage": [
       "{0}load 5"
     ]
