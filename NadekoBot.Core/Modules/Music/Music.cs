@@ -603,7 +603,8 @@ namespace NadekoBot.Modules.Music
                             mpl = null;
                         } else
                         {
-                            mpl = uow.MusicPlaylists.GetWithSongs()
+                            id = playlistsWithName.First().Id;
+                            mpl = uow.MusicPlaylists.GetWithSongs(id);
                         }
                     }
                 }
