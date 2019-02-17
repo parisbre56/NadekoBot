@@ -541,10 +541,20 @@ namespace NadekoBot.Modules.Music
                     PlOrder = i,
                 });
             }
-
+            var hasId = false;
             MusicPlaylist playlist;
             using (var uow = _db.UnitOfWork)
             {
+                var playlistsWithName = uow.MusicPlaylists.GetByParam(a => a.Name, name);
+                var id = 0;
+                //If list with that name exists, delete all and keep the ID of the first
+                if (playlistsWithName != null && playlistsWithName.Any())
+                {
+                    hasId = true;
+                    id = playlistsWithName.First().Id;
+                    uow.MusicPlaylists.RemoveRange(playlistsWithName.ToArray());
+                }
+                //Create the new list
                 playlist = new MusicPlaylist
                 {
                     Name = name,
@@ -552,12 +562,17 @@ namespace NadekoBot.Modules.Music
                     AuthorId = Context.User.Id,
                     Songs = songs.ToList(),
                 };
+                //Keep the previous id, if we had one
+                if (hasId)
+                {
+                    playlist.Id = id;
+                }
                 uow.MusicPlaylists.Add(playlist);
                 await uow.CompleteAsync();
             }
 
             await Context.Channel.EmbedAsync(new EmbedBuilder().WithOkColor()
-                .WithTitle(GetText("playlist_saved"))
+                .WithTitle(GetText(hasId ? "playlist_updated" : "playlist_saved"))
                 .AddField(efb => efb.WithName(GetText("name")).WithValue(name))
                 .AddField(efb => efb.WithName(GetText("id")).WithValue(playlist.Id.ToString()))).ConfigureAwait(false);
         }
@@ -566,8 +581,9 @@ namespace NadekoBot.Modules.Music
 
         [NadekoCommand, Usage, Description, Aliases]
         [RequireContext(ContextType.Guild)]
-        public async Task Load([Remainder] int id)
+        public async Task Load([Remainder] string name)
         {
+            bool isId = Int32.TryParse(name, out int id);
             if (!PlaylistLoadBlacklist.Add(Context.Guild.Id))
                 return;
             try
@@ -576,7 +592,20 @@ namespace NadekoBot.Modules.Music
                 MusicPlaylist mpl;
                 using (var uow = _db.UnitOfWork)
                 {
-                    mpl = uow.MusicPlaylists.GetWithSongs(id);
+                    if (isId)
+                    {
+                        mpl = uow.MusicPlaylists.GetWithSongs(id);
+                    } else
+                    {
+                        List<MusicPlaylist> playlistsWithName = uow.MusicPlaylists.GetByParam(a => a.Name, name);
+                        if(playlistsWithName!=null && !playlistsWithName.Any())
+                        {
+                            mpl = null;
+                        } else
+                        {
+                            mpl = uow.MusicPlaylists.GetWithSongs()
+                        }
+                    }
                 }
 
                 if (mpl == null)

@@ -5,6 +5,7 @@ namespace NadekoBot.Core.Services.Database.Repositories
 {
     public interface IRepository<T> where T : DbEntity
     {
+        List<T> GetByParam<F>(System.Func<T, F> getter, F value);
         T GetById(int id);
         IEnumerable<T> GetAll();
 

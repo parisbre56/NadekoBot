@@ -22,6 +22,9 @@ namespace NadekoBot.Core.Services.Database.Repositories.Impl
         public void AddRange(params T[] objs) =>
             _set.AddRange(objs);
 
+        public List<T> GetByParam<F>(System.Func<T, F> getter, F value) =>
+            _set.Where(a => getter.Invoke(a).Equals(value)).ToList();
+
         public T GetById(int id) =>
             _set.FirstOrDefault(e => e.Id == id);
 
