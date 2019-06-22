@@ -274,9 +274,10 @@
   },
   "listcustreactg": {
     "Cmd": "listcustreactg lcrg",
-    "Desc": "Lists global or server custom reactions (20 commands per page) grouped by trigger, and show a number of responses for each. Running the command in DM will list global custom reactions, while running it in server will list that server's custom reactions.",
+    "Desc": "Lists global or server custom reactions (20 commands per page) grouped by trigger, and show a number of responses for each. Running the command in DM will list global custom reactions, while running it in server will list that server's custom reactions AND global reactions. The second argument can be used to increase the number displayed per page.",
     "Usage": [
-      "{0}lcrg 1"
+      "{0}lcrg 1",
+	  "{0}lcrg 1 100"
     ]
   },
   "showcustreact": {
@@ -2091,6 +2092,14 @@
     "Usage": [
       "{0}liqu 3",
       "{0}liqu 3 id"
+    ]
+  },
+  "listquotesg": {
+    "Cmd": "listquotesg liqug",
+    "Desc": "Lists all quote groups on the server ordered alphabetically. Second argument can increase the number displayed per page.",
+    "Usage": [
+      "{0}liqug 3",
+      "{0}liqug 3 50"
     ]
   },
   "typedel": {

@@ -15,7 +15,7 @@ namespace NadekoBot.Core.Services.Database.Repositories.Impl
         {
         }
 
-        public IEnumerable<Quote> GetGroup(ulong guildId, int page, OrderType order)
+        public IEnumerable<Quote> GetGroup(ulong guildId, int page, OrderType order, int perPage = 15)
         {
             var q = _set.Where(x => x.GuildId == guildId);
             if (order == OrderType.Keyword)
@@ -23,7 +23,7 @@ namespace NadekoBot.Core.Services.Database.Repositories.Impl
             else
                 q = q.OrderBy(x => x.Id);
 
-            return q.Skip(15 * page).Take(15).ToArray();
+            return q.Skip(perPage * page).Take(perPage).ToArray();
         }
 
         public Task<Quote> GetRandomQuoteByKeywordAsync(ulong guildId, string keyword)

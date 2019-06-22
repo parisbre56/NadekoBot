@@ -8,7 +8,7 @@ namespace NadekoBot.Core.Services.Database.Repositories
     {
         Task<Quote> GetRandomQuoteByKeywordAsync(ulong guildId, string keyword);
         Task<Quote> SearchQuoteKeywordTextAsync(ulong guildId, string keyword, string text);
-        IEnumerable<Quote> GetGroup(ulong guildId, int page, OrderType order);
+        IEnumerable<Quote> GetGroup(ulong guildId, int page, OrderType order, int perPage = 15);
         void RemoveAllByKeyword(ulong guildId, string keyword);
     }
 }

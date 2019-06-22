@@ -55,6 +55,29 @@ namespace NadekoBot.Modules.Utility
 
             [NadekoCommand, Usage, Description, Aliases]
             [RequireContext(ContextType.Guild)]
+            [Priority(0)]
+            public async Task ListQuotesG(int page = 1, int perPage = 15)
+            {
+                page -= 1;
+                if (page < 0)
+                    return;
+
+                IEnumerable<Quote> quotes;
+                using (var uow = _db.UnitOfWork)
+                {
+                    quotes = uow.Quotes.GetGroup(Context.Guild.Id, page, OrderType.Keyword, perPage);
+                }
+
+                if (quotes.Any())
+                    await Context.Channel.SendConfirmAsync(GetText("quotes_page", page + 1),
+                            string.Join("\n", quotes.Select(q => $"`#{q.Id}` {Format.Bold(q.Keyword.SanitizeMentions()),-20} by {q.AuthorName.SanitizeMentions()}")))
+                        .ConfigureAwait(false);
+                else
+                    await ReplyErrorLocalized("quotes_page_none").ConfigureAwait(false);
+            }
+
+            [NadekoCommand, Usage, Description, Aliases]
+            [RequireContext(ContextType.Guild)]
             public async Task ShowQuote([Remainder] string keyword)
             {
                 if (string.IsNullOrWhiteSpace(keyword))
