@@ -26,6 +26,13 @@ namespace NadekoBot.Core.Services.Database.Repositories.Impl
             return q.Skip(perPage * page).Take(perPage).ToArray();
         }
 
+        public IEnumerable<IGrouping<string, Quote>> GetGroupG(ulong guildId, int page, int perPage = 15)
+        {
+            var q = _set.Where(x => x.GuildId == guildId).GroupBy(x => x.Keyword).OrderBy(x => x.Key);
+
+            return q.Skip(perPage * page).Take(perPage).ToArray();
+        }
+
         public Task<Quote> GetRandomQuoteByKeywordAsync(ulong guildId, string keyword)
         {
             var rng = new NadekoRandom();

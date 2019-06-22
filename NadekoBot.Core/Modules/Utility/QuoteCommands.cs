@@ -62,18 +62,22 @@ namespace NadekoBot.Modules.Utility
                 if (page < 0)
                     return;
 
-                IEnumerable<Quote> quotes;
+                IEnumerable<IGrouping<string, Quote>> quotes;
                 using (var uow = _db.UnitOfWork)
                 {
-                    quotes = uow.Quotes.GetGroup(Context.Guild.Id, page, OrderType.Keyword, perPage);
+                    quotes = uow.Quotes.GetGroupG(Context.Guild.Id, page, perPage);
                 }
 
                 if (quotes.Any())
+                {
                     await Context.Channel.SendConfirmAsync(GetText("quotes_page", page + 1),
-                            string.Join("\n", quotes.Select(q => $"`#{q.Id}` {Format.Bold(q.Keyword.SanitizeMentions()),-20} by {q.AuthorName.SanitizeMentions()}")))
+                            string.Join("\n", quotes.Select(q => $"{Format.Bold(q.Key.SanitizeMentions()),-20} x{q.Count()}")))
                         .ConfigureAwait(false);
+                }
                 else
+                {
                     await ReplyErrorLocalized("quotes_page_none").ConfigureAwait(false);
+                }
             }
 
             [NadekoCommand, Usage, Description, Aliases]
