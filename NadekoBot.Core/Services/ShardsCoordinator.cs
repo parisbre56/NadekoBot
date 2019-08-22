@@ -78,7 +78,7 @@ namespace NadekoBot.Core.Services
             _log.Info("Starting NadekoBot v" + StatsService.BotVersion);
 
             _key = _creds.RedisKey();
-
+            _log.Info("Redis options: " + _creds.RedisOptions);
             var conf = ConfigurationOptions.Parse(_creds.RedisOptions);
             _redis = ConnectionMultiplexer.Connect(conf);
 
